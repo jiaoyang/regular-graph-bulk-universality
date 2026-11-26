@@ -1,0 +1,56 @@
+{
+  "allowed_foundations": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "article_pdf": {
+    "pages": 48,
+    "path": "docs/paper/bulk_universality.pdf",
+    "sha256": "2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6"
+  },
+  "article_pdf_at_last_full_verification": {
+    "pages": 47,
+    "path": "docs/paper/bulk_universality.pdf",
+    "sha256": "2463cb06d5e2497dd9c2fc0b514202518832d4773a2e9e954f328f0259863737"
+  },
+  "build_targets": 9620,
+  "canonical_command": "./scripts/check.sh",
+  "canonical_exit_code": 0,
+  "date_utc": "2026-11-25T18:18:49.870289+00:00",
+  "dependency_artifacts_reused": true,
+  "document_update": {
+    "date": "2026-11-26",
+    "full_build_and_kernel_replay_repeated": false,
+    "kind": "PDF and article metadata only",
+    "last_full_verification_date_utc": "2026-11-25T18:18:49.870289+00:00",
+    "lean_source_config_and_scripts_unchanged": true,
+    "principal_statements_unchanged": true,
+    "receipt": "verification/pdf-update-2026-11-26.json",
+    "verified_git_commit": "7e66380c840a38c3ae3de5b8dd2b7c72afdf50cb"
+  },
+  "fresh_build_log": "verification/fresh-source-build.log",
+  "fresh_project_source_build": true,
+  "generated_implementation_auxiliaries_skipped": 8342,
+  "identical_equation_lemma_origin_changes": 8,
+  "library_modules": 2961,
+  "mathlib_replayed": false,
+  "mathlib_revision": "c44e0c8ee63ca166450922a373c7409c5d26b00b",
+  "principal_endpoints": {
+    "cor:gaussian": "GeneralizedBulk.Graph.corollary_1_3_real_along_sizes",
+    "thm:fourth": "GeneralizedBulk.Graph.article_polynomial_mixed_fourth",
+    "thm:main": "GeneralizedBulk.Graph.uniform_regular_graph_bulk_universality_along_admissible_sizes"
+  },
+  "project_artifacts_reused": false,
+  "proof_input_inventory": "verification/proof-check-input-hashes.json",
+  "proof_verification_record": "verification/proof-check-summary.json",
+  "safe_declarations_audited_and_replayed": 33990,
+  "safe_logical_endpoint_closure": 87362,
+  "scanned_lean_files": 2968,
+  "scope": "Principal Theorem 1.1, Theorem 1.2, and Corollary 1.3; sharper intermediate estimates remain governed by docs/v2-coverage-status.txt.",
+  "source_inventory": "verification/release-input-hashes.json",
+  "source_release_files": 3038,
+  "status": "PASS",
+  "textual_theorem_lemma_declarations": 14775,
+  "toolchain": "leanprover/lean4:v4.19.0"
+}

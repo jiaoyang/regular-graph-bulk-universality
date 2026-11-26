@@ -1,0 +1,54 @@
+CURRENT PRINCIPAL-STATEMENT COMPARISON WITH THE INCLUDED PDF — 2026-11-26
+
+PDF refresh, 26 November: the three principal statements are unchanged from
+the previously compared PDF. The Lean proof and its 25 November kernel
+verification are unchanged. This refresh is not a new audit of every
+intermediate proposition in the revised article.
+
+Compared source: docs/paper/bulk_universality.pdf
+SHA256 2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6
+
+The three principal conclusions
+-------------------------------
+1. Theorem 1.1, PDF page 2 (source label thm:main).
+   Graph.uniform_regular_graph_bulk_universality_along_admissible_sizes
+   proves the literal uniform finite-graph point-process limit, retaining
+   all N eigenvalues and multiplicities, with exact N*pi*rho_d(E) scale and
+   genuine vague topology. The target uses the standard beta-one Gaussian
+   particle bulk-limit definition. Graph.admissibleSizeFilter_eq_arithmetic
+   now identifies its size filter exactly with N>d and Even(N*d).
+   No spectral realization, BS/HY or analytic estimate is a caller premise.
+
+2. Theorem 1.2, PDF page 3 (source label thm:fourth).
+   Graph.article_polynomial_mixed_fourth supplies a single measurable graph
+   event with constants before size/tuple/slots, all positive admissible
+   sizes, all k=1,...,4, arbitrary orthonormal eigenfamilies and repeated
+   coordinates, with eigenvalues anywhere in compact bulk K.
+   Graph.admissibleSize_iff_arithmetic now supplies the exact numerical
+   size identification. The actual empirical and Gaussian integrals are
+   compared; no nearby-energy condition is inserted.
+
+3. Corollary 1.3, PDF page 4 (source label cor:gaussian).
+   Graph.corollary_1_3_real_along_sizes is the exact revised endpoint. The
+   comparison measure is fixed at E throughout the supremum, the window is
+   forall a, abs(lambda_a-E)<=delta(N), and empty windows give zero. The
+   complete supremum is measurable and finite on every graph. Widths need
+   only be nonnegative and tend to zero through the arithmetic size domain.
+   No monotonicity, rate, candidate-existence, k<=4, BS/HY, Gaussianity or
+   moment assumption is added. The proof is in Graph/Corollary13.lean;
+   docs/corollary-1-3-v2.txt records its implemented argument.
+
+This is a claim about these principal conclusions and their actual model
+identification, not a claim that every intermediate V2 estimate has been
+formalized at the displayed strength. The remaining quantitative/general
+statement gaps are listed explicitly in docs/v2-coverage-status.txt.
+The pre-fix V2 review is retained under provenance/v2_pre_corollary13_audit.
+Earlier complete working archives remain outside this clean release.
+
+The original BS and HY input records are not weakened. Their proved
+constructors, actual graph/spectrum sampling, real Gaussian product laws,
+physical transport cost, full counting measures and loop hierarchy remain
+in the combined proof. Graph.ArithmeticAdmissibility supplies a direct cyclic
+construction at every numerically valid size. The exact @ signature audits
+and all-safe/full-kernel checks are described in verification/summary.txt.
+Mathlib itself is the pinned base and is not claimed to have been replayed.

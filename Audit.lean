@@ -1,0 +1,229 @@
+import GeneralizedBulk
+
+#print axioms GeneralizedSwitching.calibrated_scalar_polynomial
+#print axioms GeneralizedSwitching.common_switching_polynomial
+#print axioms GeneralizedBulk.Parameters.complex_scalar_polynomial
+#print axioms GeneralizedBulk.Parameters.regular_scale
+#print axioms GeneralizedBulk.covarianceMatrix_posDef
+#print axioms GeneralizedBulk.trace_matrixResponse
+#print axioms GeneralizedBulk.EntryWickCovariance.sign_trace_covariance
+#print axioms GeneralizedBulk.calibrated_wick_drift
+#print axioms GeneralizedBulk.particleState_compensated
+#print axioms GeneralizedBulk.measurable_particleState
+#print axioms GeneralizedBulk.External.RegularSpectralData.starLaw_isProbability
+#print axioms GeneralizedBulk.Entropy.optimized_quartic_norm
+#print axioms GeneralizedBulk.Marked.productResponseIdentities
+#print axioms GeneralizedBulk.Loop.ProductResponseIdentities.integrable_loop
+#print axioms GeneralizedBulk.Loop.ProductResponseIdentities.countingLaw_eq_sineOne
+#print axioms GeneralizedBulk.identify_of_wick_and_stationary_response
+
+#print axioms GeneralizedBulk.Gaussian.markQuadraticLp_diagonal_covariance
+#print axioms GeneralizedBulk.Gaussian.entryWickCovariance_particleSeries
+#print axioms GeneralizedBulk.Gaussian.gaussianAnalyticField_hasDerivAt_ae
+#print axioms GeneralizedBulk.Gaussian.Moments.complex_weighted_even_moment_bound
+#print axioms GeneralizedBulk.Gaussian.presentedGlobalAnchor_conditional_agreement
+#print axioms GeneralizedBulk.Gaussian.constructedZ_wickFiberData
+#print axioms GeneralizedBulk.Gaussian.constructedField_hasDerivAt_ae
+#print axioms GeneralizedBulk.Gaussian.actual_globalCenteredField_equivariant_ae
+#print axioms GeneralizedBulk.Gaussian.Response.constructed_responseObservable_integrable
+#print axioms GeneralizedBulk.Exterior.gaussianMarks_ae_posDef_all_weighted_tsum_selection
+#print axioms GeneralizedBulk.Exterior.constructedMatrix_ae_signDefinite
+#print axioms GeneralizedBulk.Exterior.constructedJet_ordinary_law
+#print axioms GeneralizedBulk.Exterior.jet_law_symmetry_of_value_law
+#print axioms GeneralizedBulk.Exterior.constructed_stationaryWeightedResponse
+#print axioms GeneralizedBulk.Exterior.constructedJet_symmetry_of_value_law
+#print axioms GeneralizedBulk.identify_of_gaussian_exterior_switching
+#print axioms GeneralizedBulk.Entropy.abstract_entropy_to_quartic
+#print axioms GeneralizedBulk.Analysis.integral_capped_height_pow_le_of_recursion
+#print axioms GeneralizedBulk.Analysis.anchoredLinearCoefficient_eq_zero_ae_of_uniform_height
+#print axioms GeneralizedBulk.Gaussian.presentedGaussianL2_uniform_on_strip
+#print axioms GeneralizedBulk.identify_of_uniform_height_gaussian_exterior_switching
+#print axioms GeneralizedBulk.Gaussian.no_covariance_loss_of_norm_fourth
+#print axioms GeneralizedBulk.External.RegularSpectralData.BS_normalized_star_characteristic
+#print axioms GeneralizedBulk.Graph.edgePairLaw_switch_invariant
+#print axioms GeneralizedBulk.Graph.edgePairLaw_graph_marginal
+#print axioms GeneralizedBulk.Graph.rejection_probability_bound
+#print axioms GeneralizedBulk.Graph.edgePairLaw_rejection_probability_bound
+#print axioms GeneralizedBulk.External.RegularSpectralData.resolvent_ward_row
+#print axioms GeneralizedBulk.Graph.shifted_exterior_trace_identity
+#print axioms GeneralizedBulk.Graph.boundary_exterior_selfEnergy
+#print axioms GeneralizedBulk.Graph.edgePairExterior_proposalSwitch
+#print axioms GeneralizedBulk.Analysis.map_eq_of_weakLimit_approximate_symmetry
+#print axioms GeneralizedBulk.Graph.exterior_law_symmetry_of_finite_weak_limits
+#print axioms GeneralizedBulk.Entropy.Channel.mixed_third_derivative_kernel
+#print axioms GeneralizedBulk.Entropy.Hermite.integral_hermite_pair
+#print axioms GeneralizedBulk.Entropy.Hermite.integral_chaos_derivative_energy
+#print axioms GeneralizedBulk.Entropy.Hermite.hasDerivAt_coordinateAverage_retained
+
+#check GeneralizedBulk.External.BSQualitativeInput
+#check GeneralizedBulk.External.HYCoarseInput
+#check GeneralizedBulk.External.HYMesoscopicInput
+#check GeneralizedBulk.External.HYLocalStarInput
+
+#print axioms GeneralizedBulk.Entropy.Channel.uniform_coloredGaussian_fourth_coercivity
+
+#print axioms GeneralizedBulk.Entropy.Channel.coloredGaussian_fourth_zero_kernel
+
+#print axioms GeneralizedBulk.Entropy.Mehler.uniform_small_noise_entropy_bound
+
+#print axioms GeneralizedBulk.Entropy.Mehler.smoothedGaussianLaw_eq_affine_map
+
+#print axioms GeneralizedBulk.Entropy.Mehler.subspaceConditionalL2_mixture_ae
+
+#print axioms GeneralizedBulk.Entropy.Tensor.mixedThird_zero_of_derivative_projection
+
+#print axioms GeneralizedBulk.Graph.exists_graph_scalar_tail_recursion
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.graphFiber_variance_le_linear_height
+
+#print axioms GeneralizedBulk.Graph.Configuration.configuration_uniform_profile_probability
+
+#print axioms GeneralizedBulk.Graph.Configuration.configurationColoringCount_entropy_bound
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.BS_bounded_scalar_mark_factorization
+
+#print axioms GeneralizedBulk.Entropy.Channel.uniform_constructed_optimized_quartic
+
+#print axioms GeneralizedBulk.Entropy.Mehler.mixed_fourth_moment_bound_unit_rows
+
+#print axioms GeneralizedBulk.Entropy.Channel.uniform_actual_defect_fourth_lower
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_empiricalNormalizedSignal_bound
+
+#print axioms GeneralizedBulk.Graph.Configuration.polynomial_simplicity_probability_lower_bound
+
+#print axioms GeneralizedBulk.Graph.Configuration.regularGraph_uniform_symmetric_profile_probability
+
+#print axioms GeneralizedBulk.Graph.Configuration.graph_coloring_entropy_bound
+
+#print axioms GeneralizedBulk.Entropy.gaussianMixture_translation_symmetric_kl
+
+#print axioms GeneralizedBulk.Entropy.integrable_gaussianMixturePDF_mul_log
+
+#print axioms GeneralizedBulk.Entropy.affineGaussian_differentialEntropy
+
+#print axioms GeneralizedBulk.Analysis.entropy_gap_symmetrized_bound
+
+#print axioms GeneralizedBulk.Entropy.Hermite.correlated_gaussian_poincare_bounded_C1
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.resolventNoise_entropy_per_vertex
+
+#print axioms GeneralizedBulk.Covariance.exists_nonsingular_covariance_factor
+
+#print axioms GeneralizedBulk.Covariance.relative_logdet_stability
+
+#print axioms GeneralizedBulk.Entropy.gaussianMixture_unclipped_grid_entropy
+
+#print axioms GeneralizedBulk.Entropy.gaussianMixture_grid_error_of_covariance_lower
+
+#print axioms GeneralizedBulk.Entropy.gaussianMixture_entropy_stability
+
+#print axioms GeneralizedBulk.Analysis.linearDensity_entropy_change
+
+#print axioms GeneralizedBulk.Covariance.projectionRescale_covariance_error
+
+#print axioms GeneralizedBulk.Gaussian.starWave_add_normal_posDef
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_uniform_empirical_fourth_moments
+
+#print axioms GeneralizedBulk.Entropy.Mehler.NormalizedFiniteSignal.relativeEntropy_eq_standard_sub_differential
+
+#print axioms GeneralizedBulk.Entropy.gaussianMixture_absolute_entropy_of_covariance
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.rescaledLocalStarCovariance_sqrt_height_bound
+
+#print axioms GeneralizedBulk.Graph.Configuration.correlated_gaussian_channel_entropy_all_scales
+
+#print axioms GeneralizedBulk.Graph.Configuration.growing_palette_good_polynomial_failure
+
+#print axioms GeneralizedBulk.Gaussian.massMarkedLaw_scalar_marginal
+
+#print axioms GeneralizedBulk.Counting.canonicalPresentation_scalar_law
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_full_star_mixture_entropy_uniform
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_full_edge_mixture_entropy_uniform
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_coloredResolventNoise_entropy_bulk_uniform
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_actual_physical_entropy_channel_eventually
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.commonEntropyGood_failure_tendsto_zero
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.empirical_observationEntropyDeficit_rescaled_ideal
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_uniform_fourth_moment_rate_on_energy_window
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.BS_window_count_factorization_of_HY_padding
+
+#print axioms GeneralizedBulk.Counting.continuousAt_windowOccurrence
+
+#print axioms GeneralizedBulk.Gaussian.normalization_of_height_couplings
+
+#print axioms GeneralizedBulk.Graph.microscopicRawPairLimit_inverse_free
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_bulkPaddingIndex_eventually
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_empirical_entropy_deficit_eventually
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_common_fourth_moment_event
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_common_graphFiber_linear_variance
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_bulk_scalar_capped_moment_limits
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_bulk_anchor_tails_and_subsequence
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_bulk_scalar_limit_moments
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.windowMarkLaw_restrict_converges_of_BS_HY
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.windowMarkLaw_zero_restrict_converges
+
+#print axioms GeneralizedBulk.Graph.microscopicRawFieldPairLaw_subsequence_of_marginal_weak
+
+#print axioms GeneralizedBulk.Graph.microscopicRawFieldPairLimit_inverse_free
+
+#print axioms GeneralizedBulk.Graph.microscopicRawFieldPairLimit_rank_bound
+
+#print axioms GeneralizedBulk.Gaussian.massWindow_joint_second_moment_tendsto_zero
+
+#print axioms GeneralizedBulk.Gaussian.massMarkedLaw_eq_infinite_branch
+
+#print axioms GeneralizedBulk.Exterior.identify_of_mass_exterior_switching
+
+#print axioms GeneralizedBulk.Analysis.measure_prod_pi_eq_of_finite_marginals
+
+#print axioms GeneralizedBulk.Analysis.weakLaw_marginal_of_subsequence_identification
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.bulk_universality_of_BS_HY
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.identify_bulk_scalar_limit_of_BS_HY
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.massExterior_switching_of_rawJet_limits
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.microscopicExterior_finite_converges_of_rawJets
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_bulk_scalar_limit_normalization
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.rawValueJet_converges_of_BS_HY_limit
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.microscopicRawState_converges_of_BS_HY_limit
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.microscopicCenteredState_converges_of_BS_HY_limit
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.HY_microscopic_centered_truncation_probability
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.microscopic_covariance_centering_probability
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.spectralPairSample_map
+
+#print axioms GeneralizedBulk.External.RegularSpectralData.microscopic_proposalMean_calibration_probability
+
+#print axioms GeneralizedBulk.Gaussian.massMarkedMatrix_ae_isUnit
+
+#print axioms GeneralizedBulk.Analysis.capped_truncation_probability_two_step
+
+#print axioms GeneralizedBulk.Analysis.weakLaw_of_countable_restrictions
+
+#print axioms GeneralizedBulk.Exterior.weakLaw_finiteJetExterior

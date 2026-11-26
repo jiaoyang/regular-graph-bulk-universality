@@ -1,0 +1,310 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,microtype,booktabs,array,enumitem}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=*}
+\newtheorem{theorem}{Target theorem}
+\newtheorem{lemma}{Blueprint lemma}
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\F}{\mathcal F}
+\newcommand{\I}{\mathcal I}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\Law}{\operatorname{Law}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Ent}{\operatorname{Ent}}
+\title{\textbf{BS upper bound by heat flow}\\[4pt]
+\large A generalized proof blueprint and its Lean dependency order}
+\author{Working blueprint for the Gaussian-wave project}
+\date{November 4, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+This stage concerns only the upper bound in Backhausz--Szegedy, Section 11:
+the Gaussian star maximizes the intrinsic star-minus-edge differential entropy.
+The lower entropy bound, typical-process classification, and random-graph
+transfer are outside this stage. The main generalization is to finitely many
+channels at one common eigenvalue, allowing a singular root covariance by
+first restricting to its support. No Gaussian-classification premise or
+entropy-upper-bound premise is permitted in the final Lean theorem.
+\end{abstract}
+
+\section{Precise target and scope}
+Fix $d\geq3$, an integer $r\geq1$, and a common energy
+$|\lambda|<2\sqrt{d-1}$. Write
+\[
+ H_\lambda=\{x\in\R^{d+1}:\textstyle\sum_{i=1}^d x_i=\lambda x_0\},
+ \qquad H=H_\lambda^r.
+\]
+Let $P$ be a probability law on $H$, with the following hypotheses only:
+\begin{enumerate}
+\item Its mean is zero and its covariance is $I_r\otimes\Sigma_\lambda$,
+where $\Sigma_\lambda$ has diagonal entries one, root--leaf entries
+$\lambda/d$, and distinct-leaf entries $(\lambda^2-d)/(d(d-1))$.
+\item Its law is unchanged by simultaneous neighbor permutations in all
+channels. Each root--one-neighbor marginal is unchanged by simultaneous
+exchange of its root and neighbor channel vectors.
+\item Its intrinsic star entropy and its $2r$-dimensional edge entropy
+are finite. All integrability claims implicit in these entropies must be
+represented explicitly in Lean; a totalized integral is not a substitute.
+\end{enumerate}
+Let $\Gamma$ be the actual product of $r$ independent variance-one
+Gaussian stars at $\lambda$. Put
+\[
+ \F(P)=h_H(P)-\frac d2h(P_e).
+\]
+Here $h_H$ uses induced Euclidean volume on $H$. This is not ambient
+differential entropy on $\R^{r(d+1)}$.
+
+\begin{theorem}[Upper bound, with strictness in the bulk]
+Under these hypotheses, $\F(P)\leq\F(\Gamma)$.
+Equality holds if and only if $P=\Gamma$.
+\end{theorem}
+
+The inequality also has a closed-spectral-interval version: the frame
+weights remain nonnegative at $|\lambda|=2\sqrt{d-1}$. Strictness there
+requires an additional one-zero-weight argument; it is a distinct
+milestone, not included silently in the strict-bulk equality proof.
+The strict-bulk theorem is the version needed on the compact bulk
+interval of the universality manuscript.
+
+For a general root covariance $C\geq0$, restrict every channel vector
+to $\operatorname{ran}C$, whiten there, apply the theorem with
+$r=\operatorname{rank}C$, and transform back. Zero-variance channels
+vanish almost surely at every fixed site. Their removal precedes entropy
+calculations. This yields a jointly Gaussian star with covariance
+$C\otimes\Sigma_\lambda$, rather than asserting independence before
+whitening. The scalar theorem is $r=1$ and will be implemented first.
+
+\section{Whitened geometry and the functional}
+Let $U=\{z\in\R^d:\sum_i z_i=0\}$ and
+$E=(\R\oplus U)^r$, with its actual Euclidean structure. A fixed invertible
+linear map $L:E\to H$ sends the standard Gaussian law to $\Gamma$.
+For $Y=L^{-1}X$, covariance is the identity. Each physical edge is an
+invertible linear image of the orthogonal projection onto
+\[
+ V_i=\bigoplus_{a=1}^r\operatorname{span}(w_a,e_{i,a})\subset E,
+ \qquad \dim V_i=2r.
+\]
+The $e_i$ are unit regular-simplex vectors in $U$ with
+$\langle e_i,e_j\rangle=-1/(d-1)$ for $i\ne j$.
+Change-of-variable determinants cancel upon subtracting the Gaussian
+benchmark. Consequently the desired upper bound is equivalent to
+\[
+ h(Y)-\frac12\sum_{i=1}^d h(P_iY)
+ \leq h(G)-\frac12\sum_{i=1}^d h(P_iG),
+ \qquad G\sim N(0,I_E).
+\]
+Since $\dim E=dr$ and $\frac12\sum_i\dim V_i=dr$, this functional is
+unchanged by scalar dilation. This dimension cancellation is essential.
+
+\section{The proof in seven steps}
+\paragraph{U1. Construct the heat flow.}
+For an arbitrary probability law $\mu$ on $E$, independently sample
+$Y\sim\mu$ and $G\sim N(0,I_E)$ and set
+\[
+ Y_t=Y+\sqrt{2t}G,\qquad
+ f_t(x)=\int (4\pi t)^{-dr/2}
+               \exp[-|x-y|^2/(4t)]\,\dd\mu(y),\quad t>0.
+\]
+Prove that this is the density of the actual convolution law, is strictly
+positive and smooth, and solves $\partial_tf_t=\Delta f_t$.
+The statement must cover arbitrary mixing measures. A proof only for
+finite Gaussian mixtures does not establish this target.
+
+\paragraph{U2. Prove de Bruijn and score projection.}
+For each $t>0$, establish the required integrability, differentiation
+under the integral, and integration by parts, giving
+\[
+ \frac{\dd}{\dd t}h(Y_t)=\I(f_t),\qquad
+ \I(f)=\int|\nabla\log f|^2f.
+\]
+The same statements apply to every projected flow $P_iY_t$.
+If $g_{i,t}$ is its density, prove the score identity
+\[
+ \nabla\log g_{i,t}(P_ix)
+   =\E[P_i\nabla\log f_t(Y_t)\mid P_iY_t=P_ix].
+\]
+One can implement this first as an explicit fiber-integral identity and
+then identify conditional expectation. This avoids placing the desired
+Fisher inequality in a hypothesis structure.
+
+\paragraph{U3. Prove the weighted-frame Fisher inequality.}
+Set $c=\lambda/d$, $\rho=\sqrt{1-c^2}$, and
+\[
+ \alpha=\frac{\sqrt{1+c}+\sqrt{1-c}}2,\qquad
+ \beta=\frac{\sqrt{1+c}-\sqrt{1-c}}2,
+ \quad A_{i,a}=\alpha w_a-\beta e_{i,a},\quad
+ B_{i,a}=\beta w_a+\alpha e_{i,a}.
+\]
+These pairs are orthonormal in $V_i$, and edge reversal exchanges $A_{i,a}$
+with $B_{i,a}$. Define
+\[
+ t_A=\frac{\rho-1+2/d}{2\rho},\qquad
+ t_B=\frac{\rho+1-2/d}{2\rho}.
+\]
+Prove $t_A,t_B>0$, $t_A+t_B=1$, and the literal frame identity
+\[
+ \sum_{i,a}(t_A A_{i,a}A_{i,a}^T+t_B B_{i,a}B_{i,a}^T)=I_E.
+\]
+Conditional-expectation contraction and reversal yield an exact sum of
+nonnegative conditional-score variances:
+\[
+ \I(f_t)-\frac12\sum_i\I(g_{i,t})\geq0.
+\]
+The weights and the score identities, not Gaussianity of $Y_t$, justify
+this inequality. Both Gaussian noise and the orthogonal symmetries preserve
+the admissibility conditions along the heat flow.
+
+\paragraph{U4. Differentiate the entropy functional.}
+For
+$\Phi(t)=h(Y_t)-\frac12\sum_i h(P_iY_t)$, U2--U3 give
+\[
+ \Phi'(t)=\I(f_t)-\frac12\sum_i\I(g_{i,t})\geq0.
+\]
+Prove monotonicity on every compact time interval contained in $(0,\infty)$.
+No lower entropy bound or graph-counting input occurs here.
+
+\paragraph{U5. Identify the large-time endpoint.}
+By dilation invariance,
+$\Phi(t)=\Phi(\Law((Y+\sqrt{2t}G)/\sqrt{1+2t}))$.
+With $\Cov Y=I$, ordinary Gaussian maximum entropy gives the upper entropy
+bound. Entropy concavity of arbitrary Gaussian mixtures gives
+\[
+ h(G)+\frac{dr}{2}\log\frac{2t}{1+2t}
+ \leq h((Y+\sqrt{2t}G)/\sqrt{1+2t})\leq h(G).
+\]
+Analogous bounds hold in each $V_i$. Squeezing each entropy proves
+$\Phi(t)\to\Phi(G)$, so $\Phi(t)\leq\Phi(G)$ for every $t>0$.
+Weak convergence alone would not justify passage of differential entropy.
+
+\paragraph{U6. Recover the original law.}
+Prove $h(Y_t)\to h(Y)$ and $h(P_iY_t)\to h(P_iY)$ as $t\downarrow0$
+under the stated finite-second-moment and finite-entropy hypotheses.
+One route is entropy monotonicity under convolution plus lower
+semicontinuity of relative entropy after normalization. The corresponding
+analytic facts must be proved, not supplied as the final upper-bound input.
+U4--U6 imply $\F(P)\leq\F(\Gamma)$.
+
+\paragraph{U7. Prove equality only for the Gaussian.}
+If the original functional equals its Gaussian endpoint, monotonicity
+forces the Fisher defect to vanish at every positive time. Since both
+weights are positive, every directional score in $V_i$ equals its
+conditional projection. Positivity of $f_t$ upgrades almost-everywhere
+identities to smooth identities. Differentiation gives
+\[
+ D^3\log f_t(x)[(I-P_i)u,P_iv,w]=0.
+\]
+The mixed-derivative kernel and neighbor symmetry force
+\[
+ \log f_t(x)=h_t(x_{\mathrm{root}})
+       +\text{a constant channel quadratic form in the transverse coordinates}.
+\]
+Thus root and transverse vectors are independent and the transverse vector
+is Gaussian. The prescribed covariance fixes its covariance.
+After normalization, root--leaf reversal says the actual root law is
+stationary under
+\[
+ R\longmapsto cR+\sqrt{1-c^2}\,Z,\qquad
+ Z\sim N(0,I_r)\text{ independent of }R.
+\]
+Prove uniqueness of this stationary law by iterating its characteristic
+function: the remaining factor is evaluated at $c^nt\to0$. Hence the root
+is Gaussian, so the whole heated star is Gaussian. Finally cancel the
+nonzero Gaussian characteristic factor to recover Gaussianity of the
+original $Y$. This proves strictness without assuming a classification
+theorem. The local upper bound alone does not propagate to all tree sites;
+the 2-Markov propagation belongs to the later lower-bound/equality stage.
+
+\section{Lean implementation and proof correspondence}
+This blueprint was written before the implementation. The following table
+records the modules that now discharge its obligations; all names are in
+the namespace \texttt{GaussianWave.BS}.
+\begin{center}\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{.39\linewidth}>{\raggedright\arraybackslash}p{.52\linewidth}}
+\toprule
+Module group & Proved content\\\midrule
+\texttt{StarFrame}, \texttt{ColoredStarFrame} & Explicit scalar and joint-channel observation matrices, orthonormal rows, weighted tight frames.\\[4pt]
+\texttt{HeatFlow}, \texttt{HeatDerivatives}, \texttt{DeBruijn} & Actual arbitrary-measure heat law and density, positivity, PDE, integrability, and entropy differentiation.\\[4pt]
+\texttt{ScoreRotation}, \texttt{FisherMonotonicity} & Actual conditional-score identity for arbitrary orthonormal-row observations and the weighted residual-square identity.\\[4pt]
+\texttt{EntropyEndpoint}, \texttt{EntropyRecovery} & Gaussian entropy squeeze, actual L1 heat approximation, and recovery of finite initial entropy.\\[4pt]
+\texttt{ScalarGaussianStrictness}, \texttt{ColoredGaussianStrictness} & Smooth rigidity, full directional characteristic factorization, actual root OU stationarity, Gaussian reconstruction and deconvolution.\\[4pt]
+\texttt{PhysicalUpperBound}, \texttt{ColoredPhysicalUpperBound} & Actual laws on the eigenrelation hyperplane, derived white moments and densities, and Gaussian-relative Jacobian cancellation.\\[4pt]
+\texttt{CovarianceSupport}, \texttt{SingularPhysicalUpperBound} & Exact-rank PSD factorization, actual support reconstruction before entropy, and physical intrinsic support upper/equality statements.\\
+\bottomrule
+\end{tabular}
+\end{center}
+The joint proof uses the entire $2r$-dimensional edge observation and every
+direction in the full channel--spatial coefficient space. In particular,
+cross-channel quadratic coefficients and independence are conclusions of
+the proof. They are not supplied as probabilistic hypotheses.
+
+\paragraph{Principal entry points.}
+\texttt{star\_entropy\_upper} proves the scalar white-coordinate inequality,
+and \texttt{star\_entropy\_equality\_iff\_standardVector} proves its actual-law
+Gaussian equality case. Their genuinely joint counterparts are
+\texttt{colored\_star\_entropy\_upper} and
+\texttt{colored\_star\_entropy\_equality\_iff\_standardVector}.
+The physical single-edge source formulation is
+\texttt{physical\_single\_edge\_entropy\_upper\_and\_equality}.
+It needs just one finite-entropy edge witness and its reversal; actual
+neighbor symmetry supplies the remaining edge laws.
+
+The final source-coordinate version for arbitrary positive semidefinite
+channel covariance is
+\begin{center}\small
+\texttt{singular\_physical\_entropy\_upper},\\
+\texttt{singular\_physical\_entropy\_equality\_iff\_gaussian}.
+\end{center}
+It constructs the actual Gaussian reference with covariance
+$C\otimes\Sigma_\lambda$ and evaluates star and edge entropy on supports of
+dimensions $d\operatorname{rank}C$ and $2\operatorname{rank}C$.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+The regularized entry points are
+\begin{center}\small
+\texttt{star\_heatFrameEntropy\_nonpos}\\
+\texttt{colored\_star\_heatFrameEntropy\_nonpos}.
+\end{center}
+They require no initial density or finite initial entropy.
+Equality at any positive heat time forces the
+original actual Gaussian law. This is the form available to a subsequent
+lower-entropy argument.
+\end{minipage}
+
+\section{Source correspondence and verification status}
+The source is Backhausz--Szegedy, \emph{On the almost eigenvectors of random
+regular graphs}, Ann. Probab. 47 (2019), 1677--1725, supplied PDF:
+Section 11, Theorem 11.2, Proposition 11.1, and Lemmas 11.3--11.4;
+Appendix A supplies heated-density analytic estimates. The blueprint
+generalizes the upper-bound argument to common-energy channel vectors.
+The upper-bound package now proves the analytic and geometric steps U1--U7
+for the stated strict-bulk, common-energy version. Its final scalar and joint
+theorems do not assume Gaussianity, a Fisher inequality, de Bruijn's identity,
+entropy convergence, or independence. The hypotheses record actual laws,
+second moments, source symmetries, and finite entropy where the unheated
+functional is used. Unit second moments themselves imply genuine second
+integrability. For singular channel covariance, zero directions are removed
+using proved almost-everywhere and actual-law reconstruction before any
+entropy is evaluated.
+
+The project uses Lean 4.19.0 and pinned Mathlib revision
+\begin{center}\small\texttt{c44e0c8ee63ca166450922a373c7409c5d26b00b}.
+\end{center}
+\texttt{scripts/check.sh} runs a recursive source audit, the Lake build, and
+a logical-dependency audit. The source check rejects admitted proofs and
+source-declared axioms. Every audited theorem may use only
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound};
+\texttt{audit.txt} records the integrated verification result. The standalone
+upper package is available through \texttt{import GaussianWave.BS}.
+
+This upper stage is separate from the lower bound in Sections 6--10,
+typical-process machinery, and the finite-graph BS qualitative theorem.
+The spectral-endpoint one-zero-weight argument is also separate from the
+strict-bulk target stated here. Channels share one limiting energy, as in a
+compact bulk window. The earlier downstream eigenvector/universality package
+still exposes its qualitative BS and quantitative one-edge inputs explicitly;
+this upper theorem alone does not discharge those full source inputs.
+\end{document}

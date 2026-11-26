@@ -1,0 +1,62 @@
+{
+  "changed_distribution_paths": [
+    "PROVENANCE.txt",
+    "docs/article-source.json",
+    "docs/corollary-1-3-v2.txt",
+    "docs/corollary13-source.json",
+    "docs/final-theorem-reaudit.txt",
+    "docs/local-law-completeness-audit.txt",
+    "docs/paper/README.md",
+    "docs/paper/bulk_universality.pdf",
+    "docs/v2-coverage-status.txt"
+  ],
+  "comparison_method": {
+    "extractor": "pypdf 6.21.4",
+    "normalization": "re.sub(r'\\s+', '', text); UTF-8; SHA256",
+    "selectors": {
+      "corollary_1_3": "page index3; Corollary 1.3 inclusive to following As paragraph exclusive",
+      "theorem_1_1": "page index1; Theorem 1.1 inclusive to For an independent proof exclusive",
+      "theorem_1_2": "page index2; Theorem 1.2 inclusive to last newline3 footer exclusive"
+    }
+  },
+  "current_distribution_inventory": "verification/release-input-hashes.json",
+  "current_pdf": {
+    "pages": 48,
+    "path": "docs/paper/bulk_universality.pdf",
+    "sha256": "2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6"
+  },
+  "date": "2026-11-26",
+  "full_build_and_kernel_replay_repeated": false,
+  "full_lean_verification_date": "2026-11-25",
+  "intermediate_article_propositions_reaudited": false,
+  "kind": "PDF and descriptive metadata only",
+  "lean_sources_changed": false,
+  "normalized_statement_hashes": {
+    "corollary_1_3": {
+      "normalized_characters": 381,
+      "sha256": "9589ecd26be44f4c35ef10e2756edb86ed210a97f01be6dfa030bc3d6cc3e3b4"
+    },
+    "theorem_1_1": {
+      "normalized_characters": 126,
+      "sha256": "0d0da5694e80dacb343b66e83a4c5e0f46add0a4397d3540ce6ba613122a0032"
+    },
+    "theorem_1_2": {
+      "normalized_characters": 353,
+      "sha256": "865cca5ccc35cf86f4a6898ff98e520610e4fd8631b8c314bc6b0777a876bed6"
+    }
+  },
+  "previous_pdf": {
+    "pages": 47,
+    "sha256": "2463cb06d5e2497dd9c2fc0b514202518832d4773a2e9e954f328f0259863737"
+  },
+  "principal_statements_text_identical_after_whitespace_removal": true,
+  "proof_input_inventory": "verification/proof-check-input-hashes.json",
+  "proof_or_dependency_code_changed": false,
+  "statement_pages": {
+    "corollary_1_3": 4,
+    "theorem_1_1": 2,
+    "theorem_1_2": 3
+  },
+  "unchanged_protected_source_config_script_and_vendor_files": 3012,
+  "verified_lean_commit": "7e66380c840a38c3ae3de5b8dd2b7c72afdf50cb"
+}

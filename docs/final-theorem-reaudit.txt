@@ -1,0 +1,41 @@
+CURRENT SEMANTIC REVIEW STATUS — 2026-11-26
+
+PDF refresh, 26 November: the three principal statements are unchanged from
+the previously compared PDF. The Lean proof and its 25 November kernel
+verification are unchanged. This refresh is not a new audit of every
+intermediate proposition in the revised article.
+
+The principal statement comparison is now against docs/paper/bulk_universality.pdf:
+SHA256 2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6.
+
+The fixed-E shrinking-window uniform supremum of Corollary 1.3 and the exact
+arithmetic size-domain bridge have been proved in four new modules:
+Graph.ArithmeticAdmissibility, Graph.FixedEnergyWasserstein,
+Graph.FixedEnergyWassersteinFinite and Graph.Corollary13.
+
+The ordinary-real primary endpoint is
+  GeneralizedBulk.Graph.corollary_1_3_real_along_sizes.
+It quantifies only over the degree, fixed channel count, fixed strict bulk
+energy and deterministic widths, whose nonnegativity/limit are needed solely
+on valid graph sizes. There is no supplied estimate or global tuple-selection
+premise. The literal full candidate supremum has the fixed Gaussian target
+at E, empty value zero, and the proved finite bound 2*sqrt(k*(d+1)).
+
+Independent source review found no blocking quantifier, empty-family, or
+model-assumption gap in this proof. The stricter width-domain version was
+added to avoid even an off-domain condition on delta. Exact @ examples and
+literal rfl checks protect the definitions and public signatures; full
+validation status and actual counts are in verification/summary.txt.
+
+Read docs/corollary-1-3-v2.txt for the proof chain and
+local-law-completeness-audit.txt for the three principal-statement mapping.
+Read docs/v2-coverage-status.txt for the stronger intermediate V2 estimates
+that are still not claimed to be formalized. The 24 November V2 audit remains
+a historical pre-fix record with local paths removed in provenance/v2_pre_corollary13_audit;
+its fixed-energy and model-size findings are closed by this update.
+
+The earlier complete working archives remain outside this clean release.
+The retained pre-fix review is not a certificate for all article propositions.
+The graph, spectrum, Gaussian, counting topology and Euclidean transport
+models were preserved; only a private helper was exposed under a public name
+for reuse. No axiom or weakened statistical input was introduced.

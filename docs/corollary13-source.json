@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-26",
+  "article": "docs/paper/bulk_universality.pdf",
+  "article_sha256": "2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6",
+  "primary_endpoint": "GeneralizedBulk.Graph.corollary_1_3_real_along_sizes",
+  "ordinary_full_sequence_endpoint": "GeneralizedBulk.Graph.corollary_1_3_real",
+  "extended_nonnegative_endpoint": "GeneralizedBulk.Graph.corollary_1_3_along_sizes",
+  "scope": "Fixed-energy supremum of Corollary 1.3 and exact arithmetic admissibility. Sharper intermediate estimates are not all claimed.",
+  "new_modules": [
+    "Graph/ArithmeticAdmissibility.lean",
+    "Graph/FixedEnergyWasserstein.lean",
+    "Graph/FixedEnergyWassersteinFinite.lean",
+    "Graph/Corollary13.lean"
+  ],
+  "article_page": 4
+}

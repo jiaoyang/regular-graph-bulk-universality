@@ -1,0 +1,88 @@
+Full article closure blueprint
+==============================
+
+Targets
+-------
+The main theorem must be stated for the literal uniform law on all labelled
+simple d-regular graphs, along every positive admissible size sequence tending
+to infinity, at each fixed strict-bulk energy. No BS, HY, entropy, moment,
+Gaussianity, graph-isomorphism, or spectral-identification premise may remain.
+The W2 corollary must use the physical sum-of-coordinate-squares cost and
+quantify arbitrary orthonormal eigenvector tuples, including rotations in
+multiple eigenspaces, uniformly in the indicated bulk window.
+
+1. Coarse input
+   Identify ordered normalized spectra with the source sorted spectrum using
+   characteristic polynomials with multiplicities. Identify scaled CDFs.
+   The rank grids differ by exactly 1/N; use the source inverse-CDF 2/3 modulus.
+   Absorb all fixed constants in a smaller positive rigidity exponent.
+   Intersect the proved unconditional rigidity and all-eigenvector events and
+   pull back through the original uniform graph marginal. Construct every
+   field of the existing HYCoarseInput record, with logPower=151.
+
+2. Local-star input
+   Use the source structural/local-law event with c=1/4 and beta=1/128.
+   Outside its at-most-N^(1/4) non-tree roots, the actual pair-neighborhood
+   models for star vertices are forests with zero inherited deficit. Identify
+   their extension kernel at distances 0, 1 and 2, then match normalized and
+   raw tree transforms through z/sqrt(d-1). Bound the source explicit error
+   at eta=N^(-c0) by a positive power, absorbing logarithmic factors and
+   fixed constants. Construct the existing exact HYLocalStarInput record.
+
+3. Geometry input
+   Reuse the proved locally bijective regular-tree cover, path lifting and
+   short-cycle collision bounds. A sufficiently large acyclic neighborhood
+   makes the restricted edge-ball chart injective and induced. Identify it
+   with the existing finite word-tree graph, preserving both endpoints.
+   Combine fixed-radius cycle probabilities with a sqrt(N) bad-root cutoff.
+   Construct all fields of HYGeometryInput, including the actual isomorphism.
+
+4. Literal ensemble and spectral data
+   For every finite graph choose a real orthonormal eigenbasis and sort it.
+   Use an orthogonal reflection inside the top eigenspace to prescribe the
+   constant first eigenvector, including disconnected graphs. Choose exact
+   neighbor enumerations. Every such choice is measurable on the finite
+   graph space. Form the countable product of finite uniform graph laws and
+   prove its evaluation marginals. These constructions produce the original
+   RegularSpectralData and its exact uniform-graph law, without new inputs.
+
+5. Final bulk endpoint
+   Construct HC, HL, HG and the already proved HM internally. Choose compact
+   neighborhoods, entropy height, mesoscopic exponent and cutoff using the
+   proved numerical parameter lemmas. Apply the existing BS-free bulk proof.
+   Transfer the resulting marginal laws to the literal finite graph ensemble.
+
+6. W2 corollary
+   Reuse GaussianWave's genuine uniform transport theorem and actual Gaussian
+   product law. Supply qualitative BS from the proved graph classification
+   and root fourth moments from the proved entropy/moment bounds. Ensure the
+   finite spectral model covers arbitrary orthonormal tuples, rather than
+   only selections from one chosen basis. Assemble a source-free uniform
+   graph-ensemble statement with the article's full eigenselection quantifiers.
+
+7. Verification
+   Build all five libraries. Scan every retained local source and import
+   registry. Audit all theorem logical dependencies by module origin, including
+   private/generated helpers, allowing only propext, Classical.choice and
+   Quot.sound. Inspect the entire final theorem types for every removed input
+   and for replacement estimates. Check the literal particle process, target
+   law, normalization, ensemble, metric and quantifiers against the article.
+
+Implementation map (all proof stages compiled)
+--------------------------------------------
+1: LocalLaw/CoarseSpectrum, CoarseQuantiles, ProvedCoarseInput.
+2: LocalLaw/StarTreeNormalization, StarPolynomialError, StarForestReference,
+   ProvedLocalStarInput.
+3: LocalLaw/EdgeBallCoverIso, EdgeBallCharts, EdgeBallGeometry,
+   ProvedGeometryInput.
+4: Graph/CanonicalEigenbasis, CanonicalSpectralData, UniformEnsemble.
+5: ProvedRegularGraphUniversality.
+6: Graph/EigenfamilyPinning, EigenfamilySpectralData, UniformCandidateBS,
+   UniformRootFourth, WassersteinEnsemble. The article's full polynomial
+   mixed-fourth theorem additionally uses EigenfamilyTuplePinning,
+   TupleSpectralData, GaussianMixedFourth, UniformFourthRates and
+   UniformMixedFourth.
+7: scripts/check.sh, AuditAll.lean and LocalLawIntegrationAudit.lean.
+
+The exact article comparison is docs/local-law-completeness-audit.txt. Final
+build, source, type and axiom evidence is in verification/summary.txt.

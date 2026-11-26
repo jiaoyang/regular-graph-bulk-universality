@@ -1,0 +1,45 @@
+{
+  "counts_include_blank_lines_and_comments": true,
+  "excludes": [
+    "Mathlib",
+    "build caches",
+    "old delivery copies"
+  ],
+  "groups": {
+    "GeneralizedBulk": {
+      "files": 759,
+      "lines": 74184,
+      "nonblank_lines": 66804
+    },
+    "GaussianWave": {
+      "files": 429,
+      "lines": 59419,
+      "nonblank_lines": 53658
+    },
+    "BourgadeHuang": {
+      "files": 402,
+      "lines": 51253,
+      "nonblank_lines": 46692
+    },
+    "LocalLaw": {
+      "files": 1132,
+      "lines": 128781,
+      "nonblank_lines": 117538
+    },
+    "SpectralConsequences": {
+      "files": 239,
+      "lines": 21757,
+      "nonblank_lines": 20146
+    },
+    "Lean_audits": {
+      "files": 7,
+      "lines": 1061,
+      "nonblank_lines": 909
+    },
+    "TOTAL": {
+      "files": 2968,
+      "lines": 336455,
+      "nonblank_lines": 305747
+    }
+  }
+}

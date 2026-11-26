@@ -1,0 +1,95 @@
+REVISED COROLLARY 1.3 — PROOF AND INTERFACE
+26 November 2026
+
+PDF refresh, 26 November: the three principal statements are unchanged from
+the previously compared PDF. The Lean proof and its 25 November kernel
+verification are unchanged. This refresh is not a new audit of every
+intermediate proposition in the revised article.
+
+Compared source: docs/paper/bulk_universality.pdf, page 4, Corollary 1.3.
+SHA256: 2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6
+
+Primary endpoint:
+  GeneralizedBulk.Graph.corollary_1_3_real_along_sizes
+  GeneralizedBulk/Graph/Corollary13.lean
+
+Inputs are exactly fixed degree d>=3, fixed channel count k>=1, fixed strict
+bulk E, and a deterministic width delta. Delta is nonnegative and tends to
+zero only along M>d with M*d even. There is no monotonicity, rate, tuple
+existence, compact-window, model-realization, BS/HY, moment or Gaussianity
+premise. The graph law is the literal uniform law on labelled simple
+regular graphs. The limit is in graph probability.
+
+Quantity being controlled:
+  fixedEnergyStarWassersteinSupReal hd E hE g (delta M)
+is the supremum over ALL ordered real orthonormal eigenvector tuples A with
+  forall a, abs(A.eigenvalue a-E)<=delta M
+of the physical Euclidean W2 distance from A's actual empirical star law
+to the SAME product Gaussian star measure at E. The target is independent of
+M, graph and candidate. Empty suprema are zero. All choices of signs,
+rotations in repeated eigenspaces, and exact neighbor enumerations occur in
+the full GraphEigenCandidate type.
+
+Proof blueprint and implemented chain
+-------------------------------------
+1. Fix a compact bulk neighborhood K of E. The shrinking window lies inside
+   K eventually. All this is constructed internally from strict bulk E.
+2. Combine proved common BS classification events and uniform scalar fourth
+   control. The complement of their intersection has probability tending to
+   zero. The fourth bound applies to every channel for ANY fixed k; there
+   is no k<=4 hypothesis in the corollary.
+3. If a positive fixed W2 error persists, extract a subsequence of bad good
+   graphs and choose one witnessing candidate on each. Choices are made
+   only where a witness exists. No tuple is needed on empty windows or at
+   sizes smaller than k.
+4. Every selected eigenvalue tends to E by its window bound. The joint BS
+   theorem and uniform fourth control give the actual empirical star laws
+   a common Gaussian weak limit, with no loss of second moments. The proved
+   transport theorem upgrades this to W2 convergence to the fixed product
+   Gaussian at E, contradicting the bad threshold.
+5. This proves convergence of the existential bad event. To pass to the
+   literal supremum, choose 0<eta<epsilon: a supremum >=epsilon must have a
+   candidate whose distance exceeds eta. No maximizing tuple is assumed.
+6. Finite graph spaces give measurability. The independent coupling and the
+   exact unit-coordinate second moments prove, on EVERY graph/candidate,
+     W2^2 <= 4*k*(d+1).
+   Consequently the entire supremum is finite. The ordinary real version
+   uses toReal together with a proved ofReal roundtrip; infinity cannot be
+   silently converted to zero.
+7. A cyclic jump graph constructs every labelled simple regular graph size
+   permitted by M>d and M*d even. Paired short jumps give even degree; for
+   odd degree the even vertex count permits an additional antipodal jump.
+   Necessity follows from degree<vertex_count and the handshake identity.
+   Thus the intrinsic ensemble-size filter equals EXACTLY the article's
+   arithmetic filter, and this filter is proved nontrivial.
+8. The sequential criterion for countably generated filters promotes the
+   sequence theorem to the arithmetic-size endpoint. Width convergence is
+   assumed only on this same filter. Finite inadmissible prefixes are
+   discarded without a new model condition.
+
+Implemented modules
+-------------------
+ArithmeticAdmissibility: exact existence/size equivalence and nontriviality.
+FixedEnergyWasserstein: actual window, fixed-target iSup, measurability,
+empty-supremum identity, common-good-graph subsequence argument, uniform
+existential bad event, and supremum convergence for size sequences.
+FixedEnergyWassersteinFinite: true second-moment coupling bound and global
+finiteness, independent of any probabilistic good event.
+Corollary13: ordinary real supremum, exact roundtrip, and the final extended
+and real endpoints along the literal arithmetic domain.
+
+The old varying-eigenvalue Gaussian supremum theorem remains available.
+It is not relabelled as the revised fixed-energy theorem.
+
+Scope and verification
+----------------------
+This closes the fixed-energy supremum and arithmetic-interface gaps from the
+24 November review. The stronger quantitative intermediate propositions of
+V2 identified in that review are separate obligations and are not claimed
+as proved by this corollary completion. Its archived pre-fix assessment is
+under provenance/v2_pre_corollary13_audit.
+
+Exact @ signature checks include the literal fixed-target iSup formula,
+measurability, empty values, finiteness, real conversion and both numerical
+size endpoints. The final complete build/axiom/kernel results are recorded
+in verification/summary.txt.

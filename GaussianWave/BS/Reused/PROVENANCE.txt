@@ -1,0 +1,20 @@
+These modules are copied, with namespace/import adaptation only unless noted,
+from the user's read-only sibling project:
+the GeneralizedBulk library of the original sibling bulk-universality project
+
+Source namespace: GeneralizedBulk
+Local namespace: GaussianWave.BS.Reused
+
+Counting closure: Graph/RandomColoringEntropy plus Graph/GrowingPaletteGood.
+Shared finite/countable entropy and finite-sampling foundations are included.
+Graph/ProfileExpectation replaces its broad OrientedEdgeSampling import by
+Graph/FiniteUniformIntegration, containing exactly the generic integral lemma
+actually used. This removes unused ExternalInputs/StarCovariance dependencies.
+The original files are not modified. Additional analytic ports, if present,
+carry the same provenance and are maintained by the analytic lower-stage agent.
+
+Graph/ColorSampling: retained the original generic proofs, replacing the broad
+QuantizedProfiles import by RandomColoringEntropy and extracting its first two
+finite-profile sum lemmas (no quantizer dependencies).
+Graph/BallCounting: copied proof unchanged with its unused broad
+TreePolynomialLocalization import replaced by Mathlib.

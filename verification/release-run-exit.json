@@ -1,0 +1,8 @@
+{
+  "exit_code": 0,
+  "started_utc": "2026-11-25T18:01:03.995513+00:00",
+  "finished_utc": "2026-11-25T18:18:40.247509+00:00",
+  "command": "./scripts/check.sh",
+  "lean_num_threads": 4,
+  "frozen_source_files": 3038
+}

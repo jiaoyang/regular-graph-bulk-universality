@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: >-
+  Please cite this Lean formalization when using its code, and cite the article
+  by Yukun He, Jiaoyang Huang, and Xiaoyu Wang for the mathematical results.
+title: Bulk universality of random regular graphs in Lean
+type: software
+version: 0.1.0
+date-released: 2026-11-25
+authors:
+  - name: Bulk universality Lean contributors
+license: MIT
+abstract: >-
+  Lean 4 formalization of the principal bulk-universality theorem, polynomial
+  mixed fourth-moment statement, and fixed-energy Gaussian Wasserstein corollary
+  for uniform fixed-degree random regular graphs, with vendored local-law and
+  loop-equation formalizations. The included article PDF retains its authors'
+  copyright and is excluded from the software license.

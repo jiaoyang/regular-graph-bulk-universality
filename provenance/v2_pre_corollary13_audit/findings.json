@@ -1,0 +1,111 @@
+{
+  "review_date": "2026-11-24",
+  "article_sha256": "5b5d2a57844668f01568ff92b4d459f8c199f638ae75db83c295c5dd5cb2185b",
+  "verdict": "substantive_core_formalization_but_not_complete_V2_coverage",
+  "findings": [
+    {
+      "id": "A3",
+      "kind": "missing_revised_principal_endpoint",
+      "article": "cor:gaussian",
+      "tex_line": 229,
+      "lean": "GeneralizedBulk/Graph/ArticleWassersteinCorollaries.lean:14",
+      "claim": "fixed-E shrinking-window supremum",
+      "actual": "varying-eigenvalue Gaussian supremum; selected fixed-E theorem only"
+    },
+    {
+      "id": "A1",
+      "kind": "missing_model_interface",
+      "article": "admissible sizes",
+      "tex_line": 113,
+      "lean": "GeneralizedBulk/Graph/AdmissibleSizeLimits.lean:34",
+      "claim": "N>d and d*N even",
+      "actual": "positive N and Nonempty RegularGraph; arithmetic equivalence not located"
+    },
+    {
+      "id": "B1",
+      "kind": "weaker_quantitative_intermediate",
+      "article": "prop:channel",
+      "tex_line": 1134,
+      "lean": "GeneralizedBulk/Graph/GaussianChannelPolynomial.lean:54",
+      "claim": "theta=1/[100(k(d+1)+1)], exp(-N^(1-theta)) failure",
+      "actual": "theta=1/[1000(k+1)(d+1)], narrower theta/8 ranges and exp(-N^(1/4)) event"
+    },
+    {
+      "id": "B2",
+      "kind": "weaker_quantitative_intermediate",
+      "article": "prop:quadratic",
+      "tex_line": 1244,
+      "lean": "GeneralizedBulk/Entropy/ConstructedEntropyDeficit.lean:35",
+      "claim": "arbitrary bounded laws; C*B^3*s^(9/2)",
+      "actual": "finite signals; C*(1+((dim+1)B)^2)^9*s^(9/2)"
+    },
+    {
+      "id": "B3",
+      "kind": "domain_and_generality_gap",
+      "article": "prop:deficit / lem:ou",
+      "tex_line": 1181,
+      "lean": "GeneralizedBulk/Graph/BulkEntropyDeficit.lean:29",
+      "claim": "nonnegative deficit at signal fraction 1/2; separate-energy OU",
+      "actual": "upper deficit bound for amplitude <=1/2; common-energy BS heat theorem"
+    },
+    {
+      "id": "C1",
+      "kind": "weaker_quantitative_intermediate",
+      "article": "eq:local-law",
+      "tex_line": 1047,
+      "lean": "GeneralizedBulk/LocalLaw/ProvedLocalStarInput.lean:51",
+      "claim": "N^-1/128",
+      "actual": "N^-1/1024"
+    },
+    {
+      "id": "C2",
+      "kind": "missing_quantitative_geometry_bridge",
+      "article": "prop:inputs(d)",
+      "tex_line": 1056,
+      "lean": "GeneralizedBulk/LocalLaw/ProvedGeometryInput.lean",
+      "claim": "radius log(N)/8, sqrt(N) exceptions",
+      "actual": "fixed-radius public geometry; smaller log-radius source event"
+    },
+    {
+      "id": "C4",
+      "kind": "stronger_displayed_endpoint_missing",
+      "article": "prop:tight",
+      "tex_line": 2611,
+      "lean": "GeneralizedBulk/Analysis/ReversibleTail.lean:103",
+      "claim": "factorial-type tail",
+      "actual": "C/t recursion specialized to geometric tails and capped moments"
+    },
+    {
+      "id": "C5",
+      "kind": "stronger_displayed_endpoint_missing",
+      "article": "eq:normalization",
+      "tex_line": 2685,
+      "lean": "GeneralizedBulk/Graph/NormalizationFromRawLimit.lean:27",
+      "claim": "C*Y^-1/2 for all real Y>=1",
+      "actual": "L1 convergence along integer heights"
+    },
+    {
+      "id": "C6",
+      "kind": "different_proof_interface",
+      "article": "prop:marked",
+      "tex_line": 2641,
+      "lean": "GeneralizedBulk/Graph/BulkResolventJetConvergence.lean:16",
+      "claim": "locally uniform whole-field convergence and coupling",
+      "actual": "finite values/derivatives and separate height couplings"
+    },
+    {
+      "id": "C7",
+      "kind": "valid_alternative_switching_kernel",
+      "article": "sec:endpoint",
+      "tex_line": 2361,
+      "lean": "GeneralizedBulk/Graph/UniformSwitching.lean:211",
+      "claim": "strict induced pair of old edges",
+      "actual": "broader ordinary simple-switch acceptance rule"
+    }
+  ],
+  "existing_project_proof_checks": "PASS",
+  "V2_statement_coverage": "INCOMPLETE",
+  "project_sources_modified": false,
+  "safe_declarations_replayed": 33920,
+  "kernel_base": "Mathlib + Lean.Replay; base itself not replayed"
+}

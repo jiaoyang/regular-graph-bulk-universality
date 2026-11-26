@@ -1,0 +1,7 @@
+{
+  "first_party_whitespace_check": "PASS",
+  "vendor_bytes_preserved": true,
+  "inherited_vendor_cosmetic_warnings": 9,
+  "vendor_whitespace_log": "verification/upstream-whitespace.log",
+  "vendor_whitespace_not_modified": true
+}

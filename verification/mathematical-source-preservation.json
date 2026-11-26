@@ -1,0 +1,34 @@
+{
+  "library_modules_compared": 2961,
+  "byte_identical_library_sources": 2957,
+  "formatting_only_changes": [
+    {
+      "path": "GeneralizedBulk/Gaussian/SeriesBounds.lean",
+      "change": "trailing whitespace and excess EOF blank lines only",
+      "before_sha256": "192f42a8a80b66ba1b8676fc4f3eecc64c1956866064eb2fa5732220c5a7e6b2",
+      "after_sha256": "d5b0b20ed41eff398e90b1c009ffe827d333c3b45f382f016b2ec506b4e07936"
+    },
+    {
+      "path": "GeneralizedBulk/Spectral/TreeGreenBoundary.lean",
+      "change": "trailing whitespace and excess EOF blank lines only",
+      "before_sha256": "ee04c42686fb46959ee4dcc724b622e606cdb44971ab90796c8a2389de07c887",
+      "after_sha256": "dc99dca6a67fd3f997208c7b3ee6f12b405592d1e63b0a4c0b7eab2de4c58e6a"
+    },
+    {
+      "path": "GeneralizedBulk/BS/QualitativeInput.lean",
+      "change": "trailing whitespace and excess EOF blank lines only",
+      "before_sha256": "9c8e7e45b49ba03117ca2dab08f21e4c31c456a1e9bdd2756cb46509c7149da4",
+      "after_sha256": "a78153a50be7a410e9a388c81c376232fac765497135bff4b28e1c395ccb49c1"
+    },
+    {
+      "path": "GeneralizedBulk/BS/SpectralAdapter.lean",
+      "change": "trailing whitespace and excess EOF blank lines only",
+      "before_sha256": "1f18977903f3ee3e465f3b4ccee581021bc0bbc15882a6c7a472d36255dc8e2a",
+      "after_sha256": "18095d1b6e76fd7a426dc16b08ba040c632cf961efd0deead8f344306da8b02d"
+    }
+  ],
+  "nonwhitespace_tokens_preserved": true,
+  "vendor_library_sources_all_byte_identical": true,
+  "new_lean_audit_script": "scripts/ArticleAudit.lean",
+  "theorem_statements_and_definitions_changed": false
+}

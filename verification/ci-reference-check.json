@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-25",
+  "sources": [
+    "https://github.com/actions/checkout",
+    "https://github.com/actions/upload-artifact",
+    "https://github.com/leanprover/elan"
+  ],
+  "checkout": "actions/checkout@v7",
+  "upload_artifact": "actions/upload-artifact@v7",
+  "reference_source": "Official repositories usage examples",
+  "remote_ci_executed": false
+}

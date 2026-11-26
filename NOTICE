@@ -1,0 +1,28 @@
+Bulk universality of random regular graphs — Lean formalization
+
+The root LICENSE applies to this project's software and associated software
+documentation. The following separately attributed materials are retained.
+
+1. vendor/loop_equations
+   Loop Equations Characterize Random Matrix Statistics
+   https://github.com/jiaoyang/Loop-Equations-Characterize-Random-Matrix-Statistics-Lean
+   Copyright (c) 2026 Jiaoyang Huang
+   MIT License; see vendor/loop_equations/LICENSE.
+   The source is retained as a hash-verified local snapshot. No remote commit
+   identity is asserted.
+
+2. vendor/regular_graph_local_laws
+   https://github.com/jiaoyang/regular-graph-local-laws
+   Revision 6b21a613b184d04e5c2f940a20c20a6529dc3a49
+   Copyright (c) 2026 the project contributors
+   MIT License; see vendor/regular_graph_local_laws/LICENSE.
+
+3. docs/paper/bulk_universality.pdf
+   Bulk universality of random regular graphs
+   Yukun He, Jiaoyang Huang, Xiaoyu Wang
+   Supplied by the user and retained unchanged for the theorem comparison.
+   Copyright remains with the article's authors; the MIT software license
+   does not grant rights to this PDF.
+
+Mathlib and its support packages are fetched separately by Lake and retain
+their own licenses. Their checked revisions are recorded in lake-manifest.json.

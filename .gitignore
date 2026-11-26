@@ -1,0 +1,24 @@
+# Lean, Lake, and Python build products
+.lake/
+**/.lake/
+__pycache__/
+*.py[cod]
+*.olean
+*.ilean
+*.trace
+*.hash
+
+# Local editor and operating-system files
+.DS_Store
+.vscode/
+.idea/
+
+# Reproducible run logs; summaries and JSON receipts remain tracked
+/verification/*.log
+
+# Local release archives and scratch work
+/work/
+/tmp/
+*.zip
+
+# Keep the dependency lockfiles: do not ignore lake-manifest.json.

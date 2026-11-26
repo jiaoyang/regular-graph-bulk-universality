@@ -1,0 +1,314 @@
+RELEASE NOTE: local machine paths have been replaced by descriptive names.
+The mathematical findings below are the historical pre-fix review.
+The Corollary 1.3 and arithmetic-size gaps have since been closed; see
+docs/local-law-completeness-audit.txt for the current principal endpoints.
+
+LEAN / REVISED ARTICLE V2 — HONESTY AND COVERAGE AUDIT
+Review date: 24 November 2026
+
+Verdict
+-------
+The project contains substantive formal proofs of the core bulk-universality
+and mixed-fourth-moment results for the actual uniform simple regular-graph
+ensemble. I found no extra statistical assumption or weakened Gaussian,
+counting-measure, uniform-graph, or Wasserstein definition in the inspected
+final proof paths.
+
+It is NOT a complete formalization of the revised article at the quantifiers,
+rates and generality stated throughout V2. The revised Gaussian-star corollary
+needs a different uniform endpoint, and several intermediate propositions are
+stronger than the concrete results currently proved. Successful Lean checking
+does not establish correspondence with a stronger TeX proposition.
+
+Sources and scope
+-----------------
+V2: bulk-universality-V2.tex (historical user-supplied source)
+SHA256: 5b5d2a57844668f01568ff92b4d459f8c199f638ae75db83c295c5dd5cb2185b
+Lean root:
+the merged_bulk working project (outside this release)
+All Lean references below are relative to this root. Article references are
+source line numbers and labels in the supplied V2, rather than PDF pages.
+
+The previous comparison used a different article:
+bulk-universality-point-process.tex (earlier user-supplied source)
+SHA256: d82f954e7fb95f3e22a3a4d33de9ea02ed1446cbbfb57f35bc23a0e012a55e8e
+All 2988 files in the previous source/configuration/document hash manifest
+still match. This review did not edit mathematical source or weaken a statement
+to make it pass. Build/audit logs from this review are stored separately.
+
+A. Principal results
+--------------------
+
+A1. Bulk universality, V2 thm:main, lines 137-145: substantive match,
+with an explicit arithmetic-admissibility wrapper still missing.
+
+GeneralizedBulk/ProvedRegularGraphUniversality.lean:47-50 defines the actual
+finite counting measure from ALL matrix eigenvalues, retaining multiplicities
+and the constant mode. The theorem at lines 81-90 gives precisely
+  sum_i delta_[N*pi*rawDensity(d,E)*(lambda_i-E)]
+under regularGraphLaw, at every fixed strict bulk E and d>=3.
+GeneralizedBulk/ExternalInputs.lean:102-106 tests ALL bounded continuous real
+functions on the counting-measure space. The vendored PointProcessModel.lean:
+24-37 uses locally finite integer counting measures and the actual vague
+topology. The finite law is uniform on all labelled simple d-regular graphs;
+there is no connectedness, simple-spectrum, or conditioned-subfamily premise.
+
+The final theorem constructs the BS/HY inputs internally. The generic _of_HY
+lemmas are intermediate proof tools, not unclosed premises of the public
+finite-ensemble result. The response/loop record is also constructed:
+GeneralizedBulk/Gaussian/GlobalConstruction.lean:65-88,
+GeneralizedBulk/Exterior/ConstructedStationarity.lean:57-114,
+GeneralizedBulk/ConstructedCriterion.lean:55-85, and
+GeneralizedBulk/RegularGraphUniversality.lean:68-84.
+
+V2 explicitly ranges over N>d with d*N even (line 113). Lean instead defines
+AdmissibleSize d M as 0<M and Nonempty (RegularGraph M d), in
+Graph/AdmissibleSizeLimits.lean:34-40. Graph/AdmissibleNontrivial.lean:13-43
+constructs arbitrarily large clique-block sizes and proves that this filter is
+nontrivial. This does NOT prove every size satisfying the numerical conditions
+is represented. The finite combinatorial equivalence / numeric-size wrapper
+was not found in the project or as an already-applied imported theorem.
+This is a missing model-interface proof, not a hidden analytic assumption or
+a restriction of the graph ensemble to clique blocks.
+
+A2. Mixed fourth moments, V2 thm:fourth, lines 201-214: match of the
+substantive result, subject to the same arithmetic-admissibility interface.
+
+Graph/ArticleMixedFourth.lean:16-28 chooses positive b, chi and C before M,
+graph, tuple and four slots, and gives one measurable event with the polynomial
+probability and moment bounds at EVERY positive admissible size. It includes
+all k=1,...,4, all real orthonormal eigenfamilies and eigenspace rotations,
+all repeated physical slots, and eigenvalues anywhere in the compact bulk set.
+No nearby-energy condition is added. The tuple pinning and common bad-witness
+construction are actual proofs, not assumptions of uniformity.
+
+The empirical law is uniform root times uniform neighbor permutation with
+sqrt(N) scaling: GaussianWave/Covariance.lean:160-190. The comparison covariance
+is block-diagonal, and its equality with a product of independent Gaussian
+stars is proved: GaussianWave/StarComparison.lean:25-27,44-77. The moment
+quantity is an actual difference of integrals, Graph/UniformMixedFourth.lean:
+14-17. Integrability is established in the supporting finite/Gaussian lemmas.
+
+A3. Revised Gaussian-star corollary, V2 cor:gaussian, lines 227-240:
+NOT yet the literal uniform theorem in the project.
+
+V2 fixes one E and takes
+  sup_{orthonormal tuples, max_a |lambda_a-E| <= delta_N}
+    W2(empirical star law, product Gaussian star law AT E),
+with empty supremum zero and convergence in graph probability.
+
+Graph/ArticleWassersteinCorollaries.lean:14-19,40-48 instead proves the OLD
+article's supremum: energies in compact K, pairwise diameter at most delta_N,
+and Gaussian comparison AT EACH TUPLE'S OWN EIGENVALUES.
+Graph/ArticleWassersteinCommonEnergy.lean:140-153 proves a fixed-E conclusion
+for a globally selected tuple whose eigenvalues converge in probability to E.
+It does not declare or prove V2's fixed-E supremum over the shrinking window.
+
+This looks derivable from the existing deterministic common-energy limit and
+uniform good-event / bad-witness machinery. That derivation is still a Lean
+obligation; an informal implication or a theorem about one selected family
+cannot be reported as an already-checked uniform supremum theorem.
+
+The metric itself is genuine: GaussianWave/Transport.lean:20-24,126-146,
+419-421 uses actual couplings, sum of squared physical coordinate differences,
+its infimum and square root. This finding is about coverage, not a fake W2.
+
+B. Intermediate entropy propositions do not all match V2
+--------------------------------------------------------
+
+B1. Gaussian-noise lower bound, V2 prop:channel, lines 1134-1155:
+concrete quantitative bounds are weaker.
+
+V2 sets theta_V=1/[100(k(d+1)+1)], permits signal size 0.5*N^theta_V
+and covariance range [N^-theta_V,N^theta_V], and asserts error
+C*N^-theta_V*log N with failure C_d*exp(-N^(1-theta_V)).
+
+Entropy/ChannelParameters.lean:14-19 sets
+  theta_L=1/[1000(k+1)(d+1)], b_L=theta_L/8.
+Graph/GaussianChannelPolynomial.lean:54-71 proves the correlated channel
+bound for signal/covariance exponents b_L with error N^(-theta_L/2).
+Its good-event parameter is t=N^(1/4) (line 61); the growing-palette event
+has the weaker exp(-N^(1/4)) failure estimate (GrowingPaletteGood.lean:13-20).
+The concrete theorem is substantive and uniform over its permitted noise and
+signals, but it does not prove the displayed V2 rates or full parameter range.
+The exact numerical theta cannot simply be renamed to make these equivalent.
+
+B2. High-noise quadratic approximation, V2 prop:quadratic,
+lines 1244-1257: concrete generality and B dependence are weaker.
+
+V2 covers arbitrary bounded neighbor-invariant normalized laws and asserts
+  ||u_s||_3 <= C*B*s^(3/2),
+  |Delta_s - Q(u_s)/2| <= C*B^3*s^(9/2),
+for s<=c*B^-2, with constants independent of B.
+
+Entropy/ConstructedEntropyDeficit.lean:35-44 proves a finite-weighted-signal
+estimate with remainder
+  C*(1+((dim+1)*B)^2)^9 * a^9,
+where a=sqrt(s). For fixed dimension this grows like B^18*s^(9/2), rather
+than B^3*s^(9/2). Conversion between Euclidean and coordinate-l1 bounds changes
+dimension constants, not this power of B. Entropy/UniformSmoothing.lean:45-53
+has the same coarse dependence. The finite empirical application is covered;
+the arbitrary-law sharp proposition is not thereby proved.
+
+Entropy/ChaosCriterion.lean:150-156 contains the sharp B^(4/3) optimized form,
+but assumes ChaosEntropyHypotheses. Its fields explicitly include the Taylor
+bound, chaos expansion, coercivity and deficit bounds (lines 38-52). This is
+an honestly labelled conditional abstract lemma, not an independent proof of
+V2's concrete sharp analytic proposition. The final fourth-moment proof uses
+the concrete weaker estimate and still obtains a positive polynomial exponent.
+
+B3. Half-noise deficit / separate-energy OU theorem: literal domain and
+output gaps remain.
+
+V2 prop:deficit, lines 1181-1192, gives both nonnegativity and an upper bound
+for (X+Z)/sqrt(2), i.e. signal fraction s=1/2. Graph/BulkEntropyDeficit.lean:
+18-33 gives an upper bound for amplitudes 0<=a<=1/2, i.e. s=a^2<=1/4.
+The amplitude convention is explicit in Entropy/MehlerSignalScale.lean:21,
+37-39. The reviewed endpoint is not the same displayed half-noise assertion.
+
+The GaussianWave/BS heat monotonicity and equality theorems are real proofs,
+but at one common scalar energy c: BS/ColoredUpperBound.lean:17-25 and
+BS/ColoredGaussianStrictness.lean:76-89. V2 lem:ou, lines 959-1009, treats
+separate energies lambda_a. The quantitative route uses a separate-energy
+Gaussian frame/coercivity argument, rather than an already-identified literal
+separate-energy version of this full OU theorem.
+
+B4. Fourth-chaos coercivity is substantively covered.
+Entropy/UniformFourthCoercivity.lean:131-137 handles arbitrary separate
+energies in a compact bulk set, with actual Gaussian L2 norms and conditional
+operators (GaussianFrameSystem.lean:37-46). The kernel/coercivity is proved in
+ColoredFourthCoercivity.lean:48-76. Empirical whitening, zero means, identity
+covariance, permutation/reversal invariance and admissibility are derived
+from actual orthonormal eigenvectors, not supplied as conclusion certificates.
+
+C. Spectral and microscopic propositions
+----------------------------------------
+
+C1. V2 local-star error, eq:local-law at line 1047, is N^-1/128.
+LocalLaw/ProvedLocalStarInput.lean:51 fixes the public proved exponent at
+1/1024, with its numerical estimate in StarPolynomialError.lean:162-165.
+N^-1/1024 is weaker for large N. The source theorem is parameterized sufficiently
+to permit V2's geometric choices, but a sharper compact-bulk stability/error
+adapter is still needed to claim that exact rate.
+
+C2. V2 prop:inputs(d), lines 1056-1059, controls tree neighborhoods of radius
+(log_{d-1} N)/8 with at most sqrt(N) exceptions. The public HG record constructs
+fixed-radius geometry. The bridge uses a structural radius proportional to
+log N/16 with at most N^(1/4) bad centers; this does not by itself give the
+larger V2 radius. General source counting estimates provide ingredients for a
+retuned quantitative proof, but the exact claimed event was not identified.
+
+C3. V2's constant mesoscopic trace bound IS covered.
+ExternalInputs.lean:177-185 requires a constant, and
+LocalLaw/ProvedMesoscopicInput.lean:136-148 proves a bound independent of N down
+to N^(-1+alpha). The N^alpha term at lines 115-131 only absorbs a logarithmic
+source cutoff. It should not be misreported as a weaker N^alpha trace bound.
+SourceScaling.lean:37-89 proves the exact raw/normalized resolvent conversion.
+
+C4. V2 prop:tight, lines 2608-2620, states the factorial-type tail
+C*exp(-c*t*log(2+t))+C*N^-b. Analysis/ReversibleTail.lean:91-129 deliberately
+bounds the genuine C/t recursion by a geometric 1/2 recursion; lines 164-190
+derive capped moments. Graph/BulkScalarTightness.lean:19-40 supplies tightness
+and subsequences. The stronger displayed factorial-tail endpoint was not found.
+The retained C/t recursion may allow a further quantitative iteration proof;
+this is a coverage gap, not a claim that the stronger tail is false.
+
+C5. V2 eq:normalization, lines 2685-2686, gives an L1 error <=C*Y^-1/2 for
+EVERY real Y>=1. Graph/NormalizationFromRawLimit.lean:13-28 instead gives
+L1 convergence to i along integer heights normalizationHeight n=(n+1)*i,
+plus infinite total mass. Gaussian/HeightCouplings.lean constructs separate
+couplings at each integer height. The precise all-real-height rate is not
+an output of these theorems.
+
+C6. V2 prop:marked, lines 2641-2647 and 2693 onward, states locally uniform
+joint convergence of analytic fields and one whole-field exchangeable coupling.
+Graph/BulkResolventJetConvergence.lean:16-45 supplies every finite family of
+values and derivative slots. Whole Gaussian analytic fields are constructed,
+but the reviewed convergence/coupling route uses finite jets and individual
+height couplings. These suffice for the finite-test loop hierarchy; they do
+not constitute the literal stronger function-space/coupling proposition.
+
+C7. The switching acceptance rule is a valid alternative, not literally V2's.
+V2 lines 2361-2363 accepts only if the old two edges are the only edges among
+all four endpoints. Graph/UniformSwitching.lean:211-213 checks distinctness
+and absence of the two proposed new edges, allowing the other two cross edges.
+The formal involution/reversibility and rejection estimates are proved for
+that broader rule. ExteriorSwitching.lean:211 onward and
+Exterior/RawCoordinates.lean:17 retain boundary corrections. This does not
+invalidate the formal proof; it is a different implementation of switching.
+
+D. Target identification and trust boundary
+-------------------------------------------
+sineOneLaw is the beta-one specialization of a law constructed from actual
+Gaussian-beta particles. The density is
+  exp(-beta*sum_i x_i^2/(4N))*product_{i<j}|x_i-x_j|^beta
+in vendor/loop_equations/BourgadeHuang/RationalBulk/GaussianBetaDensity.lean:
+19-21. GaussianBetaLimit.lean:37-43,75-98 proves the particle bulk limit and
+choice independence/full convergence. This is a substantive standard
+log-gas definition, compatible with V2's GOE bulk-limit convention.
+The project does not separately prove the GOE matrix-to-eigenvalue-density
+formula or an explicit intensity-1/pi formula. Those should not be described
+as additional formal conclusions of this project.
+
+No unclosed ProductResponseIdentities/loop record was found at the final
+uniform-ensemble theorem. Loop/Hierarchy.lean:145-191 proves integrability and
+the full required finite-test hierarchy, including repeated arguments and
+mixed half-planes. Undefined Bochner integrals are not being used to create
+a vacuous loop equation. Generic hypotheses in reusable helper lemmas are
+not hypotheses of the final proved graph theorem.
+
+E. Verification status
+----------------------
+All seven current checks PASS (exit code zero): source scan, full five-library
+build, default-target check, module-provider resolution, all-safe axiom audit,
+exact EXISTING interfaces/import-order comparison, and full project kernel replay.
+The build used up-to-date project artifacts; this review does not claim a new
+from-scratch compilation of every module. All 2957 project artifacts match the
+previous replayed SHA256 manifest, and the current replay checked them again.
+
+Current results:
+- 9616 build targets; 2957 project modules; 2963 scanned Lean files.
+- 33920 safe project declarations: only propext, Classical.choice, Quot.sound.
+- All 33920 safe declarations replayed at kernel trust level zero.
+- Complete required-endpoint closure: 87221 safe constants; no unsafe/partial
+  logical dependency. The 8330 generated implementation auxiliaries are
+  separately reported and excluded under official Lean.Replay semantics.
+- All safe types/bodies/universes agree under reversed root imports; eight
+  identical generated equation lemmas change only origin attribution.
+- All 2988 recorded source/configuration/document hashes still match; zero
+  project-source edits during this review.
+- Mathlib pinned at c44e0c8ee63ca166450922a373c7409c5d26b00b;
+  actual tracked source status clean. Mathlib itself was not replayed.
+
+See verification/checks.json and the accompanying logs. These PASS results
+certify the encoded statements and do not close the V2 correspondence gaps.
+
+The existing-interface examples check the older theorem types. Their PASS
+cannot certify the revised fixed-E supremum or sharper V2 rates, which are
+not those types. The Mathlib and Lean.Replay environment is the declared base;
+a project kernel replay is not a replay of Mathlib itself.
+
+F. Correction to previous completeness language and next obligations
+--------------------------------------------------------------------
+A blanket description of the ENTIRE article as fully formalized was too broad.
+The old article already contains the channel theta/failure and B^3 remainder
+claims (old source lines 436-441 and 589), so these auxiliary gaps are not all
+caused by the revision. The earlier kernel/axiom PASS remains valid for the
+encoded statements, and the principal bulk and fourth-moment results are real.
+It does not establish every intermediate estimate as written in either article.
+
+To claim complete coverage of V2, the project should at least:
+1. Prove arithmetic admissibility equivalence and numeric-size endpoints.
+2. Add and prove V2's fixed-E shrinking-window supremum theorem, with empty
+   supremum zero and genuine physical W2.
+3. Prove the exact channel, sharp quadratic, half-noise/separate-energy heat,
+   local-star and logarithmic-radius geometry statements, or explicitly revise
+   the article's intermediate statements/proof to the bounds actually proved.
+4. Prove the stated factorial tail, all-real-height normalization rate and
+   whole-field convergence/coupling propositions, or document the weaker
+   finite-test alternative proof as such.
+5. Update the article mapping and coverage report to V2's actual source hash
+   and labels. Retain a strict distinction between proof-object validation
+   and correspondence to the mathematical claims in the revised text.
+
+No source fix or theorem weakening was performed during this review.

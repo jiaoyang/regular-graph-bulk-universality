@@ -1,0 +1,37 @@
+name: Lean build and kernel checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      LEAN_NUM_THREADS: 4
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install elan and the pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o "$RUNNER_TEMP/elan-init.sh"
+          sh "$RUNNER_TEMP/elan-init.sh" -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+      - name: Fetch pinned dependency artifacts
+        run: lake exe cache get
+      - name: Compile and audit all project libraries
+        run: ./scripts/check.sh
+      - name: Upload verification records
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lean-verification
+          path: verification/
+          if-no-files-found: warn

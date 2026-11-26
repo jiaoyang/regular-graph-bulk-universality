@@ -1,0 +1,23 @@
+{
+  "project_build_directories_empty": true,
+  "project_build_directories": [
+    {
+      "path": ".lake/build",
+      "exists": false,
+      "olean_count": 0
+    },
+    {
+      "path": "vendor/loop_equations/.lake/build",
+      "exists": false,
+      "olean_count": 0
+    },
+    {
+      "path": "vendor/regular_graph_local_laws/.lake/build",
+      "exists": false,
+      "olean_count": 0
+    }
+  ],
+  "mathlib_revision": "c44e0c8ee63ca166450922a373c7409c5d26b00b",
+  "dependency_artifacts_reused": true,
+  "project_artifacts_reused": false
+}

@@ -1,0 +1,687 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=26mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,microtype,booktabs,array,enumitem}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=*}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\Law}{\operatorname{Law}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\Ga}{\Gamma}
+\newcommand{\ee}{\mathrm e}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\BS}{Backhausz--Szegedy}
+\title{\textbf{Normalized Gaussian waves for bulk eigenvectors}\\[3pt]
+\large A local extension of Backhausz--Szegedy, a reduced bulk-universality input,\\
+and a proof structure for later Lean formalization}
+\author{Research note on the two supplied manuscripts}
+\date{November 4, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+The useful extension is a uniform, conditional-on-the-graph Gaussian-wave
+limit with variance one for fixed orthonormal tuples at nearby energies.
+We prove this on every fixed tree neighborhood, assuming only a uniform
+scalar fourth-moment bound in probability. The published input is
+\BS's Theorem 2.2 and Remark 1; their scalar Theorem 2.1 alone is insufficient
+for the local joint conclusion. We then identify a smaller quantitative
+input sufficient for the supplied bulk-universality argument: covariance
+control for quadratic marks of two eigenvectors on one oriented edge.
+This input implies the required scalar moment bound and the weighted
+spectral-tail estimate. We distinguish the results proved here from the
+additional quantitative theorem asserted and argued in the supplied draft.
+\end{abstract}
+
+\section{What the source article proves and how its proof works}
+The source is \BS, \emph{On the almost eigenvectors of random regular
+graphs}, Ann. Probab.\ 47 (2019), 1677--1725 \cite{BS}. The second source
+is the supplied November 3 bulk-universality TeX draft \cite{Bulk}.
+All references to numbered results of \BS\ below use the published PDF.
+
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.48\linewidth}>{\raggedright\arraybackslash}p{.16\linewidth}}
+\toprule
+Source result & Content & PDF / journal page\\
+\midrule
+Theorem 2.1 & Uniform weak Gaussianity of the empirical entries of every
+zero-sum almost eigenvector; the limiting variance may be below one.
+& 4 / 1680\\[3pt]
+Corollary 2.2 & Joint Gaussian entry laws for fixed tuples at nearby
+approximate eigenvalues. & 5 / 1681\\[3pt]
+Theorem 2.2, Remark 1 & Random-covering neighborhood laws; the remark
+extends the conclusion to fixed tuples at nearby energies.
+& 6 / 1682\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Their conclusion allows a scalar wave $\sigma\Psi_\lambda$ with
+$0\leq\sigma\leq1$. Although the finite vectors have normalized squared
+length, weak convergence can lose second moments. Thus ``exact
+eigenvector'' and ``orthonormal'' do not, on their own, justify replacing
+$\sigma$ by one in this argument.
+
+The proof of Theorem 2.1 is obtained from the stronger local theorem.
+Its main dependency chain is as follows.
+\begin{enumerate}
+\item Proposition 5.1 transfers the classification of typical tree
+processes, Theorem 5.2, to uniform finite-graph statements. Compactness,
+concentration of local-global colored laws, and a contradiction argument
+produce common graph events that work for all admissible vectors.
+\item Lemma 5.3 uses spectral bounds and truncation to put a nonconstant
+typical eigenvector process in the tree spectral interval.
+\item Theorem 6.1 gives a finite-alphabet entropy inequality by counting
+colored regular graphs. Proposition 7.1 and Appendix C permit smoothing
+with an independent Gaussian wave while preserving typicality.
+\item Theorems 8.1 and 9.1 compare enlarged-neighborhood subspace
+entropies with the Gaussian benchmark. Monotonicity, summarized in
+Theorem 10.3, gives the lower benchmark at one star; equality also gives
+the 2-Markov property.
+\item Theorem 11.2 gives the upper benchmark, with equality only at the
+Gaussian star. Its proof uses Gaussian convolution, the de Bruijn
+identity, Fisher information, and a weighted frame identity.
+\item The two bounds force equality. The Gaussian star and the
+2-Markov property determine the whole Gaussian tree process. This
+completes Theorem 5.2 and hence Theorem 2.2.
+\end{enumerate}
+This compactness-based proof supplies no polynomial rate. A quantitative
+eigenvector-moment theorem needs additional estimates; see
+Section~\ref{sec:quantitative}.
+
+\section{Sampling, normalization, and exact local covariance}
+Fix $d\geq3$ and a compact interval
+$K\Subset(-2\sqrt{d-1},2\sqrt{d-1})$. Let $G$ be a simple $d$-regular
+graph on $N$ vertices, with adjacency matrix $A$. Choose real
+orthonormal eigenvectors
+\[
+ Au_a=\lambda_a u_a,\qquad
+ \langle u_a,u_b\rangle=\one_{a=b},\qquad \lambda_a\in K.
+\]
+Since $\lambda_a\ne d$ and $A\one=d\one$, each $u_a$ has zero entry sum.
+No connectedness or simplicity of the eigenvalues is required.
+
+Let $T_d$ be the infinite regular tree with root $o$. Sample a covering
+map $\phi:T_d\to G$ by choosing $\phi(o)$ uniformly, mapping its
+neighbors by a uniform bijection, and continuing by independent uniform
+local bijections away from the root. For finite $F\subset V(T_d)$ set
+\begin{equation}\label{eq:X}
+ X^F=(X_{a,x})_{a\leq k,x\in F},\qquad
+ X_{a,x}=\sqrt N\,u_a(\phi(x)).
+\end{equation}
+Write $\E_\phi$ for this sampling expectation with the graph and vectors
+fixed. Every $\phi(x)$ is uniform on the graph. The lifted law is
+invariant under tree automorphisms. Distinct tree vertices can have the
+same image; the covering law is defined even if $G$ contains short cycles.
+
+Define the spherical covariance polynomials recursively by
+\begin{equation}\label{eq:recurrence}
+ \varphi_\lambda(0)=1,\qquad
+ \varphi_\lambda(1)=\lambda/d,\qquad
+ (d-1)\varphi_\lambda(r+1)=\lambda\varphi_\lambda(r)-\varphi_\lambda(r-1)
+ \quad(r\geq1).
+\end{equation}
+For the variance-one Gaussian wave $\Psi_\lambda$,
+$\E\Psi_\lambda(x)\Psi_\lambda(y)=\varphi_\lambda(\operatorname{dist}(x,y))$.
+Denote its covariance on $F$ by $\Ga_F(\lambda)$ and let
+\begin{equation}\label{eq:target}
+ \gamma^F_{\boldsymbol\lambda}
+ =\bigotimes_{a=1}^k N(0,\Ga_F(\lambda_a)).
+\end{equation}
+These are measures on the physical coordinates $\R^{k|F|}$; their
+covariance may be singular because of eigenvector relations.
+
+\begin{lemma}[Exact covering covariance]\label{lem:cov}
+On every fixed graph as above,
+\begin{equation}\label{eq:cov}
+ \E_\phi X_{a,x}=0,\qquad
+ \E_\phi X_{a,x}X_{b,y}
+ =\one_{a=b}\varphi_{\lambda_a}(\operatorname{dist}(x,y)).
+\end{equation}
+\end{lemma}
+\begin{proof}
+Uniformity of $\phi(x)$ gives the mean and the distance-zero covariance
+$\langle u_a,u_b\rangle$. By invariance the covariance depends only on
+$r=\operatorname{dist}(x,y)$; write it $c_{ab}(r)$. The eigenvector
+relation at $y$ gives
+\[
+ d\,c_{ab}(1)=\lambda_b\,c_{ab}(0),\qquad
+ c_{ab}(r-1)+(d-1)c_{ab}(r+1)=\lambda_b c_{ab}(r),\quad r\geq1.
+\]
+There is one neighbor of $y$ nearer $x$ and $d-1$ farther away.
+The initial values and recurrence uniquely give \eqref{eq:cov}.
+\end{proof}
+
+An equivalent finite-matrix proof uses nonbacktracking-walk matrices
+\[
+ Q_0(A)=I,\quad Q_1(A)=A,\quad Q_2(A)=A^2-dI,\quad
+ Q_r(A)=AQ_{r-1}(A)-(d-1)Q_{r-2}(A)\quad(r\geq3).
+\]
+For $r\geq1$ there are $d(d-1)^{r-1}$ such walks from each vertex.
+Their endpoint covariance is
+$\langle u_a,Q_r(A)u_b\rangle/[d(d-1)^{r-1}]$.
+The exceptional formula for $Q_2$ must be retained; applying the later
+recurrence already at $r=2$ would give an incorrect diagonal term.
+
+For the star $F=\{o,o_1,\ldots,o_d\}$, the one-channel covariance is
+\begin{equation}\label{eq:star-cov}
+ \Sigma_\lambda(i,j)=
+ \begin{cases}
+ 1,&i=j,\\
+ \lambda/d,&\{i,j\}=\{0,\ell\},\\
+ (\lambda^2-d)/[d(d-1)],&i,j\geq1,\ i\ne j.
+ \end{cases}
+\end{equation}
+The star lies in $\{x:\sum_{i=1}^d x_i=\lambda x_0\}$.
+The covariance identities are exact at separated eigenvalues too;
+joint Gaussianity at separated limiting energies does not follow from them.
+
+\section{A normalized local version for eigenvectors}\label{sec:normalized}
+Let $G_N$ now be a uniform simple $d$-regular graph. The only randomness
+in probabilities below is the graph; all local laws remain conditional
+sampling laws. Define, with an empty supremum interpreted as zero,
+\begin{equation}\label{eq:M}
+ M_N(K)=\sup_{\substack{Au=\lambda u,\ \lambda\in K\\\|u\|_2=1}}
+          N\sum_{v=1}^N u(v)^4.
+\end{equation}
+The assertion $M_N(K)=O_{\PP}(1)$ means: for every $\alpha>0$, there is
+$C_\alpha<\infty$ with
+$\limsup_N\PP(M_N(K)>C_\alpha)<\alpha$.
+
+\begin{theorem}[Uniform normalized Gaussian neighborhoods]\label{thm:main}
+Assume $M_N(K)=O_{\PP}(1)$. Fix $k\geq1$, finite
+$F\subset V(T_d)$, and a deterministic sequence $\delta_N\downarrow0$.
+Then
+\begin{equation}\label{eq:main}
+ \sup_{\substack{(u_1,\ldots,u_k)\ \mathrm{orthonormal}\ \mathrm{eigenvectors}\\
+ \lambda_a\in K,\ \max_{a,b}|\lambda_a-\lambda_b|\leq\delta_N}}
+ W_2\bigl(\Law_\phi(X^F),\gamma^F_{\boldsymbol\lambda}\bigr)
+ \xrightarrow{\PP}0.
+\end{equation}
+Here $W_2$ uses the Euclidean cost in all $k|F|$ physical coordinates.
+All real orthonormal choices inside multiple eigenspaces are included.
+No rate is asserted. For $k=1$ the energy-diameter condition is vacuous.
+\end{theorem}
+
+\begin{lemma}[Fourth moments prevent second-moment loss]\label{lem:UI}
+For $m=k|F|$, on $\{M_N(K)\leq C\}$,
+\begin{equation}\label{eq:UI}
+ \E_\phi\|X^F\|^4\leq Cm^2,\qquad
+ \E_\phi[\|X^F\|^2\one_{\{\|X^F\|>L\}}]\leq Cm^2/L^2.
+\end{equation}
+Consequently every coordinate square and every coordinate product is
+uniformly integrable along any such sequence of graphs and tuples.
+\end{lemma}
+\begin{proof}
+Uniformity of $\phi(x)$ gives
+$\E_\phi|X_{a,x}|^4=N\sum_v u_a(v)^4\leq C$.
+Now $(\sum_{\ell=1}^m z_\ell^2)^2\leq m\sum_{\ell=1}^m z_\ell^4$.
+The tail estimate follows from
+$\|z\|^2\one_{\{\|z\|>L\}}\leq L^{-2}\|z\|^4$.
+Products are bounded in absolute value by one half of the sum of
+the corresponding squares.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+\emph{Step 1: the imported Gaussian classification.}
+Use \BS's Theorem 2.2 and its explicit multichannel extension in Remark 1.
+For a fixed tuple size these are uniform finite-graph conclusions, on
+events whose probability tends to one. Along sequences of their good
+graphs, with errors and eigenvalue diameters tending to zero, each weak
+subsequential neighborhood limit is a centered jointly Gaussian
+eigenvector process at the common limiting energy, possibly with lost
+covariance. One may first take a subsequence on larger and larger
+balls and then restrict to $F$.
+
+The required common-energy condition is transparent for exact
+orthonormal eigenvectors: for $\sum_a c_a^2=1$,
+\begin{equation}\label{eq:combination}
+ \left\|(A-\lambda_1)\sum_a c_a u_a\right\|_2^2
+ =\sum_a c_a^2(\lambda_a-\lambda_1)^2\leq\delta_N^2.
+\end{equation}
+This identity explains applicability; the local multichannel
+classification is imported from Remark 1. Scalar Cram\'er--Wold using
+only such channel combinations would by itself test only coefficients
+of the form $c_a t_x$ across channels and sites, rather than arbitrary
+coefficients $t_{a,x}$. It is not a complete substitute for that remark.
+
+\emph{Step 2: identify the covariance.}
+Consider any sequence of the preceding good graphs on which
+$M_N(K)\leq C$. After subselection, compactness of $K$ and the diameter
+condition give $\lambda_a\to\lambda\in K$ for all $a$.
+The fixed-dimensional laws are tight by their bounded second moments.
+Lemma~\ref{lem:UI} lets their means and covariance entries pass to
+each weak limit. Lemma~\ref{lem:cov} identifies the limiting covariance as
+\[
+ \E X_{a,x}X_{b,y}
+ =\one_{a=b}\varphi_\lambda(\operatorname{dist}(x,y)).
+\]
+The centered joint Gaussian law is therefore exactly
+$\gamma^F_{(\lambda,\ldots,\lambda)}$. Its channels are independent:
+the characteristic function of a Gaussian with block diagonal
+covariance factors over the blocks, including singular blocks.
+
+\emph{Step 3: upgrade weak convergence to $W_2$.}
+We recall the finite-dimensional implication with its relevant
+justification. A Skorokhod coupling gives $Y_n\to Y$ almost surely.
+Uniform integrability of $\|Y_n\|^2$, together with integrability of
+$\|Y\|^2$, implies uniform integrability of
+$\|Y_n-Y\|^2\leq2\|Y_n\|^2+2\|Y\|^2$. Hence
+$\E\|Y_n-Y\|^2\to0$, which bounds $W_2^2$ from above.
+Lemma~\ref{lem:UI} supplies that uniform integrability here.
+
+The targets also converge in $W_2$. The entries of $\Ga_F(\lambda)$
+are continuous in $\lambda$ by \eqref{eq:recurrence}. Couple the Gaussian
+vectors using a single standard normal vector and the positive
+semidefinite square roots of their covariance matrices. Continuity
+of those square roots gives convergence in mean squared norm.
+This argument handles changing singular supports without whitening.
+The triangle inequality now gives the desired discrepancy tending to
+zero along every such graph-and-tuple sequence.
+
+\emph{Step 4: make the conclusion uniform and in probability.}
+If \eqref{eq:main} failed, some subsequence would have discrepancy
+larger than a fixed $\varepsilon>0$ with graph probability at least
+$p>0$. Tightness of $M_N(K)$ gives $C$ with
+$\limsup\PP(M_N(K)>C)<p/2$. A diagonal choice of the uniform
+\BS\ events makes their accuracy tend to zero on a further
+subsequence. For each large index choose a graph in their intersection
+with $\{M_N(K)\leq C\}$ on which a bad tuple exists, and choose a tuple
+with discrepancy at least $\varepsilon/2$. The intersection is nonempty
+by the probability bounds. Steps 1--3 contradict this choice.
+Thus the supremum tends to zero in probability. For a fixed $N$ the
+graph sample space is finite, so measurability of this graph-valued
+supremum causes no difficulty.
+\end{proof}
+
+\begin{remark}[What is actually needed]
+The proof uses uniform integrability of root squares, transferred to
+finitely many uniformly sampled sites. A bounded $2+\epsilon$ moment,
+for any fixed $\epsilon>0$, can replace the fourth moment with the
+corresponding tail estimate. A fourth moment tending to $3$, mixed
+fourth-moment convergence, and a delocalization rate are unnecessary
+for Theorem~\ref{thm:main}. A bound of the form
+$\sqrt N\|u\|_\infty\leq(\log N)^C$ alone does not supply a uniform
+tail modulus for the squares.
+\end{remark}
+
+\begin{corollary}[Almost eigenvectors with controlled tails]\label{cor:almost}
+The same conclusion holds for any family of orthonormal zero-sum
+tuples satisfying
+\[
+ \|(A-\lambda_a)u_a\|_2\leq\rho_N\to0,\qquad
+ \lambda_a\in K,\qquad
+ \max_{a,b}|\lambda_a-\lambda_b|\leq\delta_N\to0,
+\]
+provided their scalar empirical fourth moments are bounded uniformly
+in probability over that family.
+\end{corollary}
+\begin{proof}
+Write $r_a=(A-\lambda_a)u_a$. A unit channel combination has residual
+at most $\sqrt k\rho_N+\delta_N$ at $\lambda_1$.
+For each cover coordinate, the lifted error $\sqrt N r_a(\phi(x))$
+has $L^2$ norm at most $\rho_N$. The covariance recurrence in
+Lemma~\ref{lem:cov} therefore holds with errors bounded by $\rho_N$
+before division by $d$ or $d-1$, by Cauchy--Schwarz. Induction to any
+fixed distance gives an $O_{d,K,F}(\rho_N)$ covariance error.
+Apply the joint almost-eigenvector version of the same \BS\ input
+and repeat the proof. The tail condition is essential: the source
+article constructs localized almost eigenvectors.
+\end{proof}
+
+\section{The precise interface to the bulk manuscript}\label{sec:interface}
+There are two uses downstream. The proof at label
+\texttt{rs:gaussian-limit} requires fixed tuples of edge marks at energies
+tending to the same $E$. The variance and remote-tail arguments at
+\texttt{mic:quadratic-covariance-bound} and \texttt{rs:tail} require
+quantitative covariance control for quadratic marks, uniformly over
+energies anywhere in a fixed bulk interval. The latter is an additional
+input.
+
+Here is a sufficient quantitative formulation smaller than the draft's
+full mixed-fourth theorem. It involves at most two channels and only
+edge coordinates.
+
+\begin{assumption}[One-edge quadratic covariance]\label{ass:Q}
+There are deterministic $a_N\downarrow0$, $C<\infty$, and graph events
+$\Omega_N$ with $\PP(\Omega_N)\to1$ on which the following holds
+simultaneously for all real unit bulk eigenvectors, and all orthonormal
+pairs of them. On a uniform oriented edge $(v,w)$ set
+\[
+ \xi_i=(\sqrt N u_i(v),\sqrt N u_i(w)),\qquad
+ B_i=B(\lambda_i)=
+ \begin{pmatrix}1&\lambda_i/d\\\lambda_i/d&1\end{pmatrix},\qquad
+ q_i^{rs}=\xi_{i,r}\xi_{i,s}-(B_i)_{rs}.
+\]
+For $r,s,t,u\in\{0,1\}$,
+\begin{equation}\label{eq:Q}
+ \left|\E_{\rm edge}q_i^{rs}q_j^{tu}\right|
+ \leq C\one_{i=j}+a_N.
+\end{equation}
+The diagonal case means using the same vector twice; the off-diagonal
+case means two orthonormal vectors, also when their eigenvalues coincide.
+\end{assumption}
+
+\begin{proposition}[Consequences of the reduced input]\label{prop:Q}
+Assumption~\ref{ass:Q} implies Theorem~\ref{thm:main} and its
+graph-measurable fixed-energy marked consequence below. It also gives,
+for two independently sampled oriented edges and any finite set of
+orthonormal bulk eigenvectors, the bound
+\begin{equation}\label{eq:weighted}
+ \E_*\left\|\sum_i h_i\bigl(y_i y_i^T-C_i\bigr)\right\|_{\rm F}^2
+ \leq C'\sum_i|h_i|^2+C'a_N\left(\sum_i|h_i|\right)^2,
+\end{equation}
+where $y_i=(\xi_i^{(1)},\xi_i^{(2)})\in\R^4$,
+$C_i=\operatorname{diag}(B_i,B_i)$, and $h_i$ are arbitrary complex
+coefficients fixed with the graph. Constants depend only on $d,K,C$.
+\end{proposition}
+\begin{proof}
+Since $\E_{\rm edge}\xi_{i,0}^2=1$, the diagonal case of
+\eqref{eq:Q} gives
+\[
+ N\sum_v u_i(v)^4
+ =\E_{\rm edge}\xi_{i,0}^4
+ =1+\E_{\rm edge}(q_i^{00})^2\leq1+C+a_N.
+\]
+This holds simultaneously for all allowed vectors, so
+$M_N(K)=O_{\PP}(1)$ and Theorem~\ref{thm:main} applies.
+
+For the matrix estimate, let $D_i=y_i y_i^T-C_i$. Every entry is centered.
+If the two quadratic factors $D_i^{pq},D_j^{rs}$ lie within the same
+sampled edge, \eqref{eq:Q} applies. If each lies in a different edge,
+independence of the edge samples and centering give zero. If three
+of the four linear factors lie in one edge and one in the other,
+the singleton has mean zero. In the remaining case each edge carries
+one factor from channel $i$ and one from channel $j$. Their expectations
+are exact cross-channel second moments, zero for $i\ne j$ by
+Lemma~\ref{lem:cov} and bounded for $i=j$. Thus
+\[
+ |\E_*D_i^{pq}D_j^{rs}|\leq C'\one_{i=j}+a_N
+\]
+after adjusting constants. Expand the squared absolute value of each
+entry of $\sum_i h_iD_i$, bound with $|h_i||h_j|$, and sum over the
+sixteen entries to obtain \eqref{eq:weighted}.
+\end{proof}
+
+\paragraph{How the draft supplies this hypothesis.}
+The draft's moment theorem at \texttt{th:stars} (also labeled
+\texttt{en:fourth}) compares
+every star quartic for up to four channels with its independent-Gaussian
+Wick value at polynomial error $N^{-\chi}$. Restrict to one edge and
+the channel pattern $i,i,j,j$. Exact second moments give
+\[
+ \E q_i^{rs}q_j^{tu}
+ =\E\xi_{i,r}\xi_{i,s}\xi_{j,t}\xi_{j,u}-(B_i)_{rs}(B_j)_{tu}.
+\]
+For $i\ne j$ the Gaussian comparison is zero; for $i=j$ it is uniformly
+bounded. Hence that theorem implies Assumption~\ref{ass:Q} with
+$a_N=O(N^{-\chi})$. The full four-channel statement and exact diagonal
+Wick approximation are stronger than this downstream use requires.
+This is a reduction of the required conclusion, not an assertion that
+the quantitative proof automatically becomes shorter.
+
+\paragraph{Why a rate is needed.}
+With $x_i=N\sigma(\lambda_i-E)$, $\sigma=\pi\rho_d(E)$, take
+$h_i=\sigma/(x_i-w)$ over remote bulk marks. The second term of
+\eqref{eq:weighted} is controlled by
+\begin{equation}\label{eq:rate}
+ C_Ba_N\left(\sum_{\lambda_i\in K}|x_i-w|^{-1}\right)^2.
+\end{equation}
+The draft's bound at \texttt{rs:absolute-sum} is $O_B(N^\varepsilon)$
+for the sum, so this error vanishes if
+$a_NN^{2\varepsilon}\to0$. A polynomial $a_N=N^{-\chi}$ suffices
+when $2\varepsilon<\chi$. Qualitative $a_N=o(1)$ alone does not.
+Independently proving a polylogarithmic bound on that sum would permit
+a correspondingly weaker rate.
+
+For $|x_i|>R\geq2\sup_{w\in B}|w|+1$, the diagonal term is controlled by
+\[
+ \sum_{|x_i|>R}|x_i-w|^{-2}
+ \leq\frac{C_B}{R}\operatorname{Im}s_N(\ii R),\qquad
+ s_N(w)=\sum_i(x_i-w)^{-1}.
+\]
+The draft's capped height-moment bounds then give the required $O_B(R^{-1})$
+tail in expectation. Both the rate in \eqref{eq:rate} and those separate
+spectral estimates are used; a fixed-tuple Gaussian limit cannot replace
+them.
+
+\begin{corollary}[Conditional Gaussian edge marks]\label{cor:marks}
+Under Theorem~\ref{thm:main}'s hypothesis, fix a graph-measurable
+orthonormal tuple of size $k$ with $\lambda_{a,N}\in K$ with probability
+tending to one and $\lambda_{a,N}\to E\in K$ in probability.
+Sample two oriented edges independently conditional on the
+graph, and let $Y_N=(y_{1,N},\ldots,y_{k,N})$. Put
+$C(E)=\operatorname{diag}(B(E),B(E))$ and let
+$G_1,\ldots,G_k$ be independent $N(0,C(E))$ vectors. For every fixed
+bounded Lipschitz $f$,
+\begin{equation}\label{eq:conditional}
+ \E_*f(Y_N)-\E f(G_1,\ldots,G_k)\longrightarrow0
+ \quad\text{in probability and in }L^1.
+\end{equation}
+For any graph-measurable $H_N$ with $|H_N|\leq1$,
+\begin{equation}\label{eq:stable}
+ \E[H_N f(Y_N)]-\E[H_N]\E f(G_1,\ldots,G_k)\longrightarrow0.
+\end{equation}
+Consequently, whenever a graph-measurable state $S_N$ has a joint
+subsequential limit with these marks, the marks in that limit have the
+product Gaussian law and are independent of the limiting state.
+\end{corollary}
+\begin{proof}
+Convergence of finitely many energies to $E$ permits a deterministic
+$\delta_N\downarrow0$ dominating their diameter with probability tending
+to one. Projection of Theorem~\ref{thm:main} to an oriented edge gives
+conditional convergence for one edge. Two conditionally independent
+samples give the product law and hence \eqref{eq:conditional}, with
+covariances tending to $C(E)$. Bounded convergence in probability gives
+$L^1$ convergence. Multiply the conditional error by $H_N$ to obtain
+\eqref{eq:stable}. Bounded continuous product tests identify independence
+in any joint weak limit.
+\end{proof}
+This formulation permits the graph-dependent spectral selection and
+padding of the tuple used at \texttt{rs:gaussian-limit}, including
+multiplicities and arbitrary measurable sign choices. The tuple size
+is fixed before $N\to\infty$. Conditional independence of two edge
+samples is exact even though their endpoint sets can overlap.
+
+\section{What a quantitative extension of the article must add}\label{sec:quantitative}
+For normalized local Gaussianity the preceding proof is sufficient
+once scalar tail control is available. To establish a polynomial
+version of Assumption~\ref{ass:Q}, one needs new quantitative work.
+The supplied bulk draft proposes the following route, which refines
+the original entropy argument rather than following from its stated
+theorems.
+
+\paragraph{1. Counting with correlated Gaussian noise.}
+On a common counting event, let $x$ be a bounded graph signal and
+$\zeta\sim N(0,Q)$ a nondegenerate, possibly graph-dependent, Gaussian
+field. Control the difference between realized and averaged edge-color
+entropies using Gaussian Poincar\'e and quantization. The proposed
+channel bound is
+\[
+ h((x+\zeta)_S)-\frac d2h((x+\zeta)_e)
+ \geq\frac1Nh(\zeta)-\text{polynomial error}.
+\]
+Uniformity over graph-dependent $Q$ is justified by a counting event
+uniform over all colorings; it is a substantive part of this extension.
+
+\paragraph{2. Resolvent calibration.}
+Use independent channel fields with
+\[
+ Q_a=\sigma_{\lambda_a}^{-1}
+       \operatorname{Im}(A-\lambda_a-\ii\eta)^{-1},\qquad
+ \sigma_\lambda=\pi\rho_d(\lambda),\quad\eta=N^{-c}.
+\]
+The local tangent covariance approaches the Gaussian-star covariance.
+For unit normal $(-\lambda,1,\ldots,1)/\sqrt{d+\lambda^2}$ its variance
+is $\eta/[\sigma_\lambda(d+\lambda^2)]$ to small relative error.
+The singular normal entropy cancels the corresponding term in the
+global noise entropy. With
+$L_d(\lambda)=\int\rho_d(t)\log|t-\lambda|\dd t$, the remaining identity is
+\[
+ \left[\frac12\log\frac{2\pi\ee\eta}{\sigma_\lambda}-L_d(\lambda)\right]
+ -\frac12\log\frac{2\pi\ee\eta}{\sigma_\lambda(d+\lambda^2)}
+ =\frac12\log(d+\lambda^2)-L_d(\lambda).
+\]
+This produces the Gaussian-star entropy benchmark without first
+assuming local Gaussianity of the eigenvector signal.
+
+\paragraph{3. High-noise expansion and fourth chaos.}
+After whitening, let $Y$ be centered, isotropic, symmetry-admissible,
+and $\|Y\|\leq B$, where $B\geq2$. Write $f_s$ for the density relative to standard
+Gaussian measure of $\sqrt sY+\sqrt{1-s}G$, and
+$f_s-1=\sum_{j\geq3}s^{j/2}g_j$. The entropy deficit has the proposed
+expansion, valid for $0<s\leq cB^{-2}$,
+\[
+ \Delta_s=\frac12\mathcal Q(f_s-1)+O(B^3s^{9/2}),\qquad
+ \mathcal Q(h)=\|h\|_2^2-\frac d2\|\mathcal C_e h\|_2^2.
+\]
+Here $\mathcal C_e$ is Gaussian conditional expectation onto one edge.
+Nonnegativity on admissible Hermite chaoses and strict fourth-chaos
+coercivity give
+$\mathcal Q(f_s-1)\geq\kappa s^4\|g_4\|_2^2$.
+These are analytic and finite-dimensional geometric lemmas to verify
+separately, including their multichannel versions at arbitrary bulk
+energies. Scalar near-energy Gaussianity is not a proof of them.
+
+\paragraph{4. Extract the rate.}
+If monotonicity gives $0\leq\Delta_s\leq\epsilon$ for
+$0<s\leq1/2$, the preceding estimates yield
+\[
+ \|g_4\|_2^2\leq C(\epsilon s^{-4}+B^3s^{1/2}).
+\]
+For $\epsilon\leq cB^{-6}$, choose
+$s=(\epsilon/B^3)^{2/9}$ to obtain
+\[
+ \|g_4\|_2\leq CB^{4/3}\epsilon^{1/18}.
+\]
+The difference of expectations of a fixed homogeneous quartic is its
+inner product with $g_4$, since degrees zero and two already match.
+Thus $B=(\log N)^C$ and $\epsilon=N^{-\gamma}$ give any smaller
+polynomial exponent $\chi<\gamma/18$. Restricting the resulting
+quartics to two channels on one edge proves the reduced input.
+
+The displayed cancellation and balancing exponents are consistent.
+This note does not provide a complete independent verification of the
+draft's counting, local-law, entropy-expansion, and coercivity proofs.
+Their statements remain explicitly separate quantitative dependencies
+of the bulk application.
+
+\section{Limits of the conclusion and a Lean proof structure}\label{sec:lean}
+Two simple measure examples explain why the hypotheses cannot be
+silently removed. They are logical counterexamples about moment
+convergence, not constructions of graph eigenvectors.
+
+For $0\leq s<1$, let
+\[
+ \mu_n=(1-n^{-2})N(0,s^2)
+       +\frac{n^{-2}}2(\delta_{a_n}+\delta_{-a_n}),\qquad
+ a_n^2=n^2(1-s^2)+s^2.
+\]
+These laws have mean zero and variance exactly one, but converge weakly
+to $N(0,s^2)$. Second moments escape in a rare tail. This is the
+variance-loss issue addressed by Lemma~\ref{lem:UI}.
+
+Even a bounded fourth moment does not ensure fourth-moment convergence.
+For $n\geq2$ set
+\[
+ \nu_n=(1-n^{-4})N(0,s_n^2)
+       +\frac{n^{-4}}2(\delta_n+\delta_{-n}),\qquad
+ s_n^2=\frac{1-n^{-2}}{1-n^{-4}}.
+\]
+Then $\int x^2\dd\nu_n=1$, $\nu_n\to N(0,1)$ in $W_2$, and
+\[
+ \int x^4\dd\nu_n
+ =3\frac{(1-n^{-2})^2}{1-n^{-4}}+1\longrightarrow4.
+\]
+Thus the normalization proof cannot establish the draft's mixed
+fourth-moment theorem. Also, Gaussian marginals with zero covariance
+need not be independent: $(Z,SZ)$, for independent standard Gaussian
+$Z$ and Rademacher $S$, has equal absolute coordinates. We use
+\emph{joint} Gaussianity to deduce independence.
+
+\paragraph{Recommended formalization boundary.}
+The first Lean target should be the finite-dimensional normalization
+and interface argument, with the published qualitative theorem supplied
+as an explicit hypothesis. The following order separates finite
+algebra from the deep entropy classification.
+\begin{center}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{.28\linewidth}>{\raggedright\arraybackslash}p{.46\linewidth}>{\raggedright\arraybackslash}p{.14\linewidth}}
+\toprule
+Suggested lemma/module & Mathematical contract & Status here\\
+\midrule
+\texttt{CoverSampling} & A finite restriction of the uniform covering
+law; uniform vertex marginals and edge reversal. & Defined / used\\[3pt]
+\texttt{EigenCovariance} & Zero means, Gram identity, and covariance
+recurrence \eqref{eq:cov}; finite star formulas first. & Proved\\[3pt]
+\texttt{MomentTail} & Root fourth bound implies vector fourth and
+square-tail bounds \eqref{eq:UI}. & Proved\\[3pt]
+\texttt{BSJointLimit} & Uniform joint weak Gaussian classification on
+fixed neighborhoods at a common limiting energy. & Imported \cite{BS}\\[3pt]
+\texttt{NormalizeLimit} & Weak joint Gaussian limit plus square-tail
+control and covariance identities fixes its normalized product law.
+& Proved\\[3pt]
+\texttt{WassersteinUpgrade} & Square uniform integrability upgrades
+weak convergence; PSD-root coupling gives target continuity. & Proved\\[3pt]
+\texttt{EdgeQuadratics} & Assumption~\ref{ass:Q} implies scalar fourth
+control, two-edge covariance, and \eqref{eq:weighted}. & Proved\\[3pt]
+\texttt{ConditionalMarks} & Quenched bounded-Lipschitz convergence
+implies \eqref{eq:stable} and independence from a graph state.
+& Proved\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+In a first formalization, parameterize \texttt{NormalizeLimit} by a
+named proposition asserting \texttt{BSJointLimit}; do not disguise this
+dependency as a completed formal proof. Likewise, expose
+Assumption~\ref{ass:Q} and its rate as inputs to
+\texttt{EdgeQuadratics}. No Lean files or machine-checked results are
+claimed by this note. A second stage could formalize the entropy and
+fourth-chaos route in Section~\ref{sec:quantitative}.
+
+For the manuscript, the clean dependency is therefore:
+one-edge quantitative quadratic covariance has two consequences:
+\begin{enumerate}
+\item It gives root square-tail control. Combined with the \BS\ joint
+local theorem, this yields normalized Gaussian marks.
+\item It gives the weighted quadratic variance bound. Combined with the
+separate spectral estimates, this yields remote marked-tail control.
+\end{enumerate}
+This is the eigenvector input package. The switching identities,
+microscopic tightness, loop hierarchy, and point-process identification
+remain the separate downstream arguments of the bulk manuscript.
+
+\begin{thebibliography}{9}
+\bibitem{BS}
+\'A. Backhausz and B. Szegedy,
+\emph{On the almost eigenvectors of random regular graphs},
+Ann. Probab.\ \textbf{47} (2019), no.\ 3, 1677--1725.
+\href{https://doi.org/10.1214/18-AOP1294}{doi:10.1214/18-AOP1294};
+\href{https://arxiv.org/abs/1607.04785}{arXiv:1607.04785}.
+The supplied published PDF is the source for theorem numbering.
+\bibitem{Bulk}
+Y. He, J. Huang, and X. Wang,
+\emph{Bulk universality of random regular graphs}, supplied TeX draft,
+\texttt{bulk-universality-point-process.tex}, file dated November 3, 2026.
+Relevant labels: \texttt{th:stars}, \texttt{en:qualitative},
+\texttt{ch:channel}, \texttt{en:deficit}, \texttt{en:smoothing},
+\texttt{en:quartic-coercivity}, \texttt{mic:quadratic-covariance-bound},
+\texttt{rs:absolute-sum}, \texttt{rs:tail}, \texttt{rs:gaussian-limit}.
+\end{thebibliography}
+\end{document}

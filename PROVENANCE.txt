@@ -1,0 +1,86 @@
+BULK UNIVERSALITY LEAN RELEASE — 2026-11-25
+
+PDF-ONLY UPDATE — 2026-11-26
+The bundled article is now the 48-page revision supplied on 26 November.
+The three principal statements and their page locations are unchanged.
+Lean sources, scripts, dependencies and the completed 25 November build/kernel
+checks are unchanged; no new Lean build or replay was performed for this
+document-only update. See verification/pdf-update-2026-11-26.json.
+
+Article
+-------
+Bulk universality of random regular graphs
+Yukun He, Jiaoyang Huang, Xiaoyu Wang
+The supplied PDF is retained unchanged at docs/paper/bulk_universality.pdf.
+Its content hash and the associated revised TeX identity are recorded in
+docs/article-source.json. The PDF retains the authors' copyright and is not
+covered by this repository's MIT software license.
+
+Scope
+-----
+The public theorem map is in README.md. It covers Theorem 1.1, Theorem 1.2 (equation (1.2)),
+and Corollary 1.3 through the article's complete arithmetic size domain.
+No BS/HY or substitute moment/Gaussianity premise is retained in those public
+endpoint types. The sharper intermediate V2 statements outside the present
+formalization are explicitly listed in docs/v2-coverage-status.txt.
+
+The pre-fix revised-article review is retained as a historical record under
+provenance/v2_pre_corollary13_audit. It predates the Corollary 1.3 and arithmetic
+admissibility fixes and is not the current verification certificate.
+
+Lean and Mathlib
+---------------
+Lean 4.19.0, selected by lean-toolchain.
+Mathlib c44e0c8ee63ca166450922a373c7409c5d26b00b.
+The checked-in Lake manifest records all pinned transitive dependencies.
+The project kernel replay starts from Mathlib and Lean.Replay; Mathlib itself
+is not replayed. Verification status and evidence are in verification/summary.txt.
+
+Local-law dependency
+--------------------
+Repository: https://github.com/jiaoyang/regular-graph-local-laws
+Revision: 6b21a613b184d04e5c2f940a20c20a6529dc3a49
+Directory: vendor/regular_graph_local_laws
+License: vendor/regular_graph_local_laws/LICENSE (MIT)
+The retained source snapshot and upstream file hashes are recorded in
+vendor/regular_graph_local_laws/SOURCE_SNAPSHOT.json and checked by
+scripts/check_sources.py. Upstream sources, configuration, and license are
+unchanged. The source's documented corrected relative-diagonal reference lower
+bound is retained. The bulk project proves the bounded-region estimates it
+uses, exact resolvent/spectral scaling, and transfer to the unconditional finite
+uniform graph law.
+
+Loop-equation characterization dependency
+-----------------------------------------
+Repository:
+https://github.com/jiaoyang/Loop-Equations-Characterize-Random-Matrix-Statistics-Lean
+Directory: vendor/loop_equations
+License: vendor/loop_equations/LICENSE (MIT)
+This is a local source snapshot, not a remotely verified Git revision.
+The 402 Lean source hashes are recorded in vendor/SOURCE_SNAPSHOT.json and
+checked by scripts/check_sources.py. Aggregate snapshot SHA256:
+4178f6b9a2d9ce6ef38585aca4d914310b5edf9452e8e94860391f091325abe1
+The actual theorem BourgadeHuang.RationalBulk.bourgade_huang_theorem_1_5
+is applied at beta one in GeneralizedBulk/Loop/Hierarchy.lean.
+At the historical integration, RationalBulk/Theorem19.lean was aligned to the
+inspected local checked source; it is outside the imported Theorem15 closure.
+The entire retained library is now included in the project checks. No vendor
+source is altered by release cleanup.
+
+Gaussian-wave proof reuse
+-------------------------
+GeneralizedBulk and GaussianWave merge the user's bulk-universality and
+qualitative Gaussian-wave formalizations. GaussianWave/BS/Reused contains
+namespace/import adaptations of shared counting, entropy, and sampling proofs
+from the user's sibling bulk project. Its local PROVENANCE.txt records the
+adaptations. All retained modules are included in the source and kernel audits.
+
+Release preparation
+--------------------
+The clean release omits local dependency caches, prior delivery archives,
+duplicate historical checkout copies, and obsolete verification logs.
+It retains the current mathematical source, source identity records, vendor
+licenses/snapshots, proof maps, article PDF, and reproducible verification scripts.
+The active public endpoints, exact signatures, axioms, and logical dependency
+closures are checked by scripts/check.sh. The current build scope and outcomes
+are stated only in verification/summary.txt and its referenced records.

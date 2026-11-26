@@ -1,0 +1,43 @@
+{
+  "title": "Bulk universality of random regular graphs",
+  "authors": [
+    "Yukun He",
+    "Jiaoyang Huang",
+    "Xiaoyu Wang"
+  ],
+  "user_supplied_filename": "bulk_universality.pdf",
+  "sha256": "2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6",
+  "principal_labels": {
+    "thm:main": "GeneralizedBulk.Graph.uniform_regular_graph_bulk_universality_along_admissible_sizes",
+    "thm:fourth": "GeneralizedBulk.Graph.article_polynomial_mixed_fourth",
+    "cor:gaussian": "GeneralizedBulk.Graph.corollary_1_3_real_along_sizes"
+  },
+  "comparison_date": "2026-11-26",
+  "size_domain_bridge": "GeneralizedBulk.Graph.admissibleSizeFilter_eq_arithmetic",
+  "coverage_boundary": "docs/v2-coverage-status.txt",
+  "pdf": {
+    "path": "docs/paper/bulk_universality.pdf",
+    "sha256": "2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6",
+    "pages": 48
+  },
+  "companion_tex": {
+    "filename": "bulk_universality.tex",
+    "sha256": "a1d8f6d15eeb3a6a0d6d6a82b60742c3950ca9cd9ab98ca6f9557031a0fc2b3d",
+    "included": false
+  },
+  "statement_pages": {
+    "theorem_1_1": 2,
+    "theorem_1_2": 3,
+    "corollary_1_3": 4
+  },
+  "comparison_scope": "The three principal statements. Sharper intermediate estimates are not all claimed.",
+  "document_update": {
+    "date": "2026-11-26",
+    "previous_pdf_sha256": "2463cb06d5e2497dd9c2fc0b514202518832d4773a2e9e954f328f0259863737",
+    "previous_pdf_pages": 47,
+    "principal_statements_unchanged": true,
+    "comparison": "PDF-extracted principal statement text is identical after whitespace removal; statement page locations remain 2, 3, and 4.",
+    "lean_sources_changed": false,
+    "last_full_lean_verification": "2026-11-25"
+  }
+}

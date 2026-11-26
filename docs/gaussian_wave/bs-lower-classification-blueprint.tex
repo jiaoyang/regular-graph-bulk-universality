@@ -1,0 +1,353 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,microtype,booktabs,array,enumitem}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=*}
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Law}{\operatorname{Law}}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\lean}[1]{{\small\nolinkurl{#1}}}
+\newtheorem{theorem}{Theorem}
+\title{\textbf{BS lower bound and random-graph classification}\\[4pt]
+\large Implemented proof blueprint: one Gaussian addition and cancellation}
+\author{Gaussian-wave Lean project}
+\date{November 4, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+This is the updated blueprint for the lower and qualitative classification
+chain, first written before its implementation. The process-level chain is
+now implemented: actual uniform simple-regular-graph counting, all-radius
+randomized recoloring, differential entropy, Gaussian reference asymptotics,
+strong-subadditivity equality and full-process propagation. Smoothness is
+removed by adding one independent Gaussian wave, whitening its strictly
+positive root covariance, classifying that sum, and cancelling the Gaussian
+in characteristic functions. No conservation of source variance, entropy
+inequality, Gaussian classification or smoothing-typicality assertion is a
+hypothesis of the assembled process theorem. The public spectral and random-graph interfaces are built. The final
+whole-project verification record is reported separately from this blueprint.
+\end{abstract}
+
+\section{Scope and the actual process-level theorem}
+Fix $d=m+2\geq3$, finitely many channels $r\geq0$, and a common energy
+$|\lambda|<2\sqrt{d-1}$. Let $G_n$ be labeled simple $d$-regular graphs on
+$N_n$ vertices, with $N_n\to\infty$. Mark their vertices by vectors
+$f_n(v)\in\R^r$ and assume only a uniform empirical second-moment bound
+\[
+ \frac1{N_n}\sum_v|f_n(v)|^2\leq S.
+\]
+Sampling uses an actual uniform vertex and uniformly ordered finite graph
+covers of the explicit word tree. Write $P$ for a whole-tree probability
+law whose finite cover windows are weak limits of these marked graphs.
+
+\begin{theorem}[Implemented common-good-graph classification]
+There are graph events $\mathcal H_n$ whose probabilities tend to one under
+the actual uniform labeled simple $d$-regular-graph law. Suppose
+$G_n\in\mathcal H_n$ eventually. If $P$ is invariant under all tree
+automorphisms, has finite coordinate second moments, and satisfies
+\[
+ \sum_{w\sim v}X_w=\lambda X_v
+ \quad\text{almost surely for every channel and every }v,
+\]
+then every finite joint window of $P$ is centered Gaussian.
+\end{theorem}
+
+The public process endpoint is
+\lean{common_graph_eigenprocess_finite_gaussian} in
+\lean{BS/CommonGraphEigenprocessClassification.lean}. Its source inputs
+are the actual graph marks, their cover-window weak limit, the second-moment
+bound, invariance and the common-energy eigenrelation. The finite recoloring
+lower bound, entropy witnesses, Gaussianity of the smoothed process and
+Gaussian cancellation are all derived internally. The proved ordinary spectral
+adapter derives the limit assumptions from bounded empirical $L^2$ and
+vanishing empirical $L^2$ residuals; its public endpoints are stated below.
+
+Let $C=\E[X_oX_o^{\mathsf T}]\geq0$. The eigenrelation and invariance imply
+zero means since $|\lambda|<d$, so $C=\Cov(X_o)$. Weak convergence may lose
+second moments, rank, or all variance. The qualitative Lean conclusion is
+\lean{CenteredGaussianLaw}, with the covariance determined by the actual
+limit law. It does not assert preservation of the graph normalization.
+The existing fourth-moment/uniform-integrability layer is needed when the
+bulk application requires a prescribed variance-one covariance. The joint
+proof treats all channels together at the same energy; it does not infer
+independence from separate Gaussian marginals or zero covariances.
+
+\section{L0--L1: geometry, counting, and one common graph event}
+Put $C_0=B_1(o)$, let $e_0$ be one distinguished edge, and set
+$C_k=B_k(C_0)$ and $e_k=B_k(e_0)$. Let $W_\lambda(S)$ be the literal
+solution space of the eigenrelations at the interior vertices of the finite
+tree $S$. The finite charts and all sampling maps are actual linear maps.
+They satisfy
+\[
+ \dim W_\lambda(C_k)=d(d-1)^k,\qquad
+ \dim W_\lambda(e_k)=2(d-1)^k,\qquad
+ |C_k|-\frac d2|e_k|=1.
+\]
+Thus the intrinsic dimension balance is zero while the ambient cardinality
+balance is one, multiplied by $r$ for the joint process. The implementation
+constructs the infinite word tree, its finite balls, automorphisms,
+rerootings, local covers, path lifting, and the complete center-fixing
+finite-ball stabilizers. These are proved geometry, not adapter premises.
+
+For any finite alphabet $F$ and continuous probability-mass kernel
+$\phi:\R^r\to\mathcal P(F)$, recolor vertices independently conditional on
+the marks. Direct finite counting, profile concentration, and weak limits
+give for every $k$
+\begin{equation}\label{eq:finite}
+ H((\phi_*X)_{C_k})-\frac d2H((\phi_*X)_{e_k})
+ \geq \int H(\phi(x))\,\dd\Law(X_o)(x).
+\end{equation}
+The conditional recoloring entropy on the right is retained. The kernel
+is arbitrary and ordinary; no union bound over real-valued kernels is used.
+A summable palette slack gives one event for every finite alphabet. Actual
+finite product coloring laws and dependency-variance estimates control the
+local observations, and finite path-word codes implement higher-radius
+recoding.
+
+Independent finite markers make the center-fixing group actions free with
+probability tending to one. Recovery is proved on the good marker set;
+a quantitative error controls the complement. Exact orbit-fiber entropy
+and the actual stabilizer orders cancel the group terms. Marker entropy
+then cancels with the right side of \eqref{eq:finite}. Radius and marker
+alphabet are fixed before the graph limit. The endpoint is
+\lean{common_graph_all_radius_finite_recoloring_entropy_lower}
+in \lean{Lower/AllRadiusEntropyLower.lean}; the marker cancellation theorem
+is \lean{ball_path_codes_marker_entropy_cancellation}.
+
+For local tree-likeness, the proof uses direct switchings in the simple
+ensemble. It bounds prescribed edges and injective short cycles. A collision
+of a locally injective cover implies an actual nearby short cycle, using
+nonbacktracking paths and cycle extraction. Consequently the fraction of
+roots with a colliding depth-$k$ cover tends to zero in probability for every
+fixed $k$. A proved slow diagonal produces $K_n\to\infty$ and the event
+\lean{CommonGraphGood}: all palettes are good and the bad-root fraction is
+less than $1/(K_n+1)$ for every $k\leq K_n$.
+
+Precisely, \lean{exists_common_graph_good_events} in
+\lean{Lower/CommonGraphEvents.lean} proves
+\[
+ \Pr\{G_n\notin\mathcal H_n\}\longrightarrow0
+\]
+for every growing admissible size sequence with nonempty simple-regular
+ensembles and $N_nd=2E_n$. There is no local-tree or graph-counting premise
+in this probability theorem. Its palette failure is bounded eventually by
+$\exp(-\sqrt{N_n})$; the moving-radius part uses the slow diagonal rather
+than an asserted uniform rate.
+
+\section{L2--L3: finite alphabets to intrinsic entropy}
+For an arbitrary finite-second-moment law, let $f_t$ be its actual positive
+heat density. Posterior Jensen/log-sum and Fubini prove the translation bound
+\[
+ D(f_t(x)\,\dd x\,\|\,f_t(x+h)\,\dd x)
+ \leq\frac{|h|^2}{4t}.
+\]
+The theorem is \lean{heatDensity_translation_kl}. The finite-output kernel
+\lean{heatQuantizerMass} is continuous in the original color, normalized,
+and is the actual law of a quantized Gaussian translate. Its block law is
+proved to be the product recoloring law. First remove finite clipping at a
+fixed grid mesh, then refine the mesh. These limits, including their root
+conditional entropy, prove
+\[
+ h(X_{C_k}+\sigma Z)-\frac d2h(X_{e_k}+\sigma Z)
+ \geq r\,h(N(0,\sigma^2))
+\]
+for independent ambient noise at every vertex. The finite-to-differential
+endpoint is \lean{heat_entropy_lower_of_finite_recoloring}.
+
+An actual orthogonal decomposition of each finite window into
+$W_\lambda(S)^r$ and its normal space factors the heat density and its
+entropy. The normal Gaussian is independent of both the signal and the
+intrinsic Gaussian noise. L0's dimension identities cancel exactly the
+root noise term. Heat-entropy recovery as $t\downarrow0$, with finite second
+moments and absolutely integrable density times log density, gives
+\[
+ h_{\rm intr}(X_{C_k})-\frac d2h_{\rm intr}(X_{e_k})\geq0.
+\]
+The actual process theorem is \lean{process_intrinsic_entropy_lower}; its
+finite-dimensional helper is
+\lean{intrinsic_entropy_nonneg_of_finite_recoloring}.
+
+This ambient heat noise serves the entropy approximation only. The
+independent Gaussian \emph{wave} added in L8 below is a different actual
+process and obeys the eigenrelation. No entropy in a singular ambient
+space is used in the argument.
+
+\section{L4--L7: relative entropy, equality, and all finite balls}
+Let $G$ be the actual variance-one Gaussian wave, with independent channels.
+The finite covariance calculation and its nonzero spectrum prove
+\[
+ g_k:=h_{\rm intr}(G_{C_k})-\frac d2h_{\rm intr}(G_{e_k})\longrightarrow0
+\]
+in the strict bulk. Repeated descendant blocks cancel; the remaining
+positive factors have the same linear leading behavior. This is the proved
+covariance/pseudodeterminant calculation
+\lean{joint_gaussian_ball_reference_entropy_tendsto_zero}, not a reference
+asymptotic supplied as a theorem parameter.
+
+For actual positive finite-entropy density laws, strong subadditivity and
+its equality case are proved by constructing the conditional-independent
+gluing over the shared marginal. Literal sibling-difference innovation
+coordinates identify the C/E overlaps and cores. Apply the inequalities in
+the same invertible chart to the unknown law and its Gaussian reference.
+Their Jacobian terms cancel in relative entropy; no determinant-one claim
+is needed. The actual process results are
+\lean{process_vertex_relative_ssa_nonneg} and
+\lean{process_edge_relative_ssa_nonneg}; their finite-ball equality theorems
+are \lean{vertexBall_relative_ssa_equality_iff} and
+\lean{edgeBall_relative_ssa_equality_iff}.
+
+Write $\alpha(S)=h_{\rm intr}(X_S)-h_{\rm intr}(G_S)$ and
+$b_k=\alpha(C_k)-(d/2)\alpha(e_k)$. The overlap inequalities prove that
+$b_k$ is nonincreasing. The intrinsic lower bound gives $b_k\geq-g_k$;
+since $g_k\to0$, every $b_k\geq0$. These conclusions are
+\lean{process_relative_entropy_balance_antitone} and
+\lean{process_relative_entropy_balance_nonneg}.
+
+The jointly colored heat-flow upper theorem gives $b_0\leq0$ for an actual
+invariant eigenprocess with identity root second moments. Its equality
+case identifies the entire joint star law; the raw-coordinate bridge is
+\lean{process_star_relative_upper_and_gaussian_equality}. Thus all $b_k$
+and both nonnegative overlap gaps vanish. Strong-subadditivity equality
+then propagates the Gaussian base law recursively through every finite
+ball. This is \lean{all_ball_laws_eq_gaussian_of_zero_gaps}, followed by
+\lean{process_eq_jointGaussian_of_zero_gaps}. Equality on exhausting joint
+balls determines the whole countable-process law.
+
+The resulting smooth theorem is
+\lean{smooth_normalized_eigenprocess_eq_jointGaussian} in
+\lean{BS/SmoothEigenprocessClassification.lean}. Its intermediate inputs
+are genuine invariance, coordinate $L^2$, the common eigenrelation, identity
+root second moments, the all-radius finite recoloring property, and positive
+finite-entropy witnesses for the actual raw C/E innovation laws. The next
+section constructs every extra input when applying it to an arbitrary
+source process. Neither a Gaussian star nor grafting independence is
+assumed.
+
+\section{L8: add one Gaussian wave, whiten, classify, cancel}
+Let the source be $X\sim P$ and let $G$ be an independent variance-one
+$r$-channel Gaussian wave of the same energy. Put
+\[
+ C=\E[X_oX_o^{\mathsf T}],\qquad
+ A=(C+I)^{1/2},\qquad B=A^{-1},\qquad Y=B(X+G).
+\]
+The source matrix $C$ may be singular or zero. Since $C+I$ is positive
+definite, $B$ is invertible on all $r$ channels. This construction avoids
+assuming an entropy density on a deficient support or assuming that the
+source covariance is conserved from finite graphs.
+
+\begin{enumerate}
+\item \textbf{Actual graph realization of the independent sum.}
+Strict-bulk Gaussian waves are weak limits of concrete finite-radius
+Gaussian block factors. Local iid Gaussian sampling, exact no-collision
+window laws, covariance matching and dependency concentration construct
+marks on a subsequence of the same graphs. Their entire lifted law tends
+to $P*G$, with a uniform empirical second-moment bound. The theorem is
+\lean{exists_graph_realization_independent_gaussian_wave_sum}. This proves
+smoothing closure rather than taking it as an input.
+\item \textbf{Finite recoloring lower bound after whitening.}
+L1 applied to those realizations gives
+\lean{common_graph_gaussian_wave_sum_finite_recoloring_entropy_lower}.
+Composing any continuous finite-output kernel with $B$ proves
+\lean{finite_recoloring_entropy_lower_channelProcessMap}; hence $Y$ has
+all the lower-bound inputs needed by the smooth theorem.
+\item \textbf{Ordinary moments, invariance and eigenrelations.}\par
+The actual law \lean{whitenedGaussianSumLaw} is defined from a literal
+product probability measure and pushforwards. Invariance and common-energy
+eigenrelations are preserved. The Gaussian reference has proved zero means,
+identity root second moments and finite coordinate second moments. Thus
+$X_o+G_o$ has actual second-moment matrix $C+I$, and $Y_o$ has identity
+second moments. These are the theorems in
+\lean{BS/WhitenedGaussianSum.lean} and
+\lean{BS/JointGaussianProcessProperties.lean}.
+\item \textbf{Actual positive finite-entropy witnesses.}
+Each raw finite-ball Gaussian innovation factor is surjective. An arbitrary
+finite-second-moment law convolved with that Gaussian has a positive density
+with absolutely integrable density times log density. Innovation extraction
+commutes with independent addition and with the same invertible channel
+map at every site. Consequently
+\lean{whitenedGaussianSumVertexInnovationDensity} and
+\lean{whitenedGaussianSumEdgeInnovationDensity}, with their exact
+\lean{_law} theorems, supply all raw C/E witnesses. No density of $P$ is
+assumed, including when $C$ is singular. Applying L4--L7 proves
+\lean{common_graph_whitened_eigenprocess_classification}:
+$\Law(Y)=\Law(G)$ as actual whole-process probability laws.
+\item \textbf{Recover the source without a small-noise limit.}
+Invert the whitening to obtain $\Law(X+G)=\Law(AG)$. On every finite joint
+window, independence gives a product of characteristic functions. The
+Gaussian factor is nonzero and can be cancelled. Actual second-moment
+addition identifies the remaining covariance with the source's actual
+second-moment matrix; its positive semidefiniteness is proved before the
+Gaussian conclusion. The finite-window theorem is
+\lean{finiteGaussian_of_classified_whitened_sum}, using
+\lean{centeredGaussian_of_independent_sum}. This gives the qualitative
+source theorem stated at the start. One fixed independent Gaussian wave
+suffices; no $a\downarrow0$ step, fourth moment or variance-preservation
+premise is used.
+\end{enumerate}
+
+\section{Verification status, public interfaces, and scope}
+The complete standalone Lean 4.19 \lean{scripts/check.sh} check passed:
+431 local source files were audited without admitted proofs or source
+axioms, 7,082 build targets completed, and the logical dependencies of
+5,509 imported \lean{GaussianWave} theorems were audited, including private
+declarations. All 396 BS modules, including the public random-graph and
+spectral interfaces, are integrated. The only logical foundations are
+\lean{propext}, \lean{Classical.choice}, and \lean{Quot.sound}.
+The independent semantic review found no hidden Gaussianity, entropy-bound,
+or covariance-conservation premise in the assembled classification chain.
+
+The public graph-limit, random-graph-event and spectral adapter modules
+now build. The graph-limit endpoints
+are \lean{common_graph_approximate_window_limit_gaussian} and
+\lean{common_graph_approximate_BSJointClassification}. Their ordinary
+inputs are bounded empirical root $L^2$ and empirical $L^2$ residuals tending
+to zero, with each channel energy tending to the same strict-bulk energy.
+They derive whole-process tightness, actual invariant eigenprocess limits,
+and classification of every weak subsequential finite-window limit.
+The actual event API is \lean{exists_RRGClassificationEvents}, with
+\lean{RRGClassificationEvents.good_probability_tendsto_one} and
+\lean{RRGClassificationEvents.approximate_BSJointClassification}.
+
+The literal spectral star sampler is identified with the lifted $C_0$
+window; its empirical moments and matrix residuals are proved equal to the
+graph quantities. The public selected-eigenvector theorem is
+\lean{RRGClassificationEvents.eigenvectors_BSJointClassification}.
+It permits arbitrary graph-dependent choices, including repeated channels,
+whose eigenvalues tend to one common strict-bulk energy. The theorem
+\lean{RRGClassificationEvents.signals_BSJointClassification} also permits
+arbitrary bounded-$L^2$ signals with vanishing actual matrix residuals.
+The corresponding non-event helpers are
+\lean{common_graph_eigenvectors_BSJointClassification} and
+\lean{common_graph_signal_BSJointClassification}. None requires Gaussianity,
+entropy, a fourth moment, or covariance preservation as an input.
+
+These are qualitative conclusions: every weak subsequential joint star
+law is centered Gaussian. Root second-moment bounds establish actual
+precompactness, so the limit classification is not vacuous. Prescribed
+normalized covariance and Wasserstein convergence belong to the separate
+uniform-integrability layer. The final whole-project build and recursive
+source/axiom audit are recorded in the project's \lean{audit.txt}; this
+blueprint does not replace that verification record or assert that the
+separate quantitative inputs are proved.
+
+The counting dependency closure was copied, with attribution, from the
+user-authorized sibling \emph{GeneralizedBulk} development into
+\lean{GaussianWave.BS.Reused}. It is rebuilt locally and does not import
+an external machine path. The manuscript-editing chat
+\emph{JH Edit d-regular graph bulk universality article} supplies downstream
+mathematical context, not Lean proof evidence. Conditional sibling results
+with HY or BS input fields were not substituted for this classification.
+
+The source correspondence is Backhausz--Szegedy, \emph{On the almost
+eigenvectors of random regular graphs}, Ann. Probab. 47 (2019),
+1677--1725: Sections 4--10, Appendix C, and the assembly in Section 11.
+The joint extension uses the entire colored edge sigma algebra and full
+cross-channel quadratic moments, not scalar marginal classification.
+Spectral endpoints, different limiting energies, quantitative rates, and
+the separate fourth-moment input are outside this strict-bulk qualitative
+statement.
+\end{document}

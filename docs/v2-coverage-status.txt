@@ -1,0 +1,42 @@
+CURRENT V2 COVERAGE BOUNDARY — 2026-11-26
+
+PDF refresh, 26 November: the three principal statements are unchanged from
+the previously compared PDF. The Lean proof and its 25 November kernel
+verification are unchanged. This refresh is not a new audit of every
+intermediate proposition in the revised article.
+
+The revised article source is docs/paper/bulk_universality.pdf, SHA256
+2ce31ea8779105e1ee89777daed582840e5030bec8e7725dbb52d3537d7a6de6.
+
+The fixed-energy supremum gap in revised Corollary 1.3 is closed by
+Graph.corollary_1_3_real_along_sizes. The exact arithmetic admissibility gap
+is closed by Graph.admissibleSize_iff_arithmetic and the equality of size
+filters. These constructors cover EVERY size M>d with M*d even, not only
+a clique-block subsequence. The existing bulk and mixed-fourth endpoints
+therefore have the required model-size identification as well.
+
+The ordinary-real supremum has a proved finite global bound and exact
+ofReal roundtrip; empty windows give zero. All orthonormal tuples, arbitrary
+eigenspace rotations, signs and neighbor enumerations are included. The
+comparison Gaussian product remains fixed at E. See corollary-1-3-v2.txt.
+
+This does not assert that every intermediate proposition in V2 has been
+proved at its displayed quantitative strength. The pre-fix review under
+provenance/v2_pre_corollary13_audit identified separate obligations:
+- the sharper channel parameters/failure probability;
+- the B^3 high-noise remainder for arbitrary bounded neighbor-invariant normalized laws;
+- the literal half-noise/separate-energy heat statement;
+- the N^(-1/128) local-star bound versus the proved N^(-1/1024) adapter;
+- the exact larger logarithmic tree radius;
+- factorial-tail and all-real-height normalization rates;
+- the whole-field convergence/coupling proposition rather than the finite-jet
+  alternative sufficient for the proved loop hierarchy.
+Those obligations are not silently treated as solved by Corollary 1.3.
+The actual proof uses weaker sufficient intermediate estimates. The current
+principal theorem claims and this remaining proof-statement coverage must
+be distinguished from one another.
+
+Build, source, exact-signature, all-safe axiom and full project kernel replay
+results are recorded in verification/summary.txt. The Mathlib base itself
+is not claimed to have been replayed. A small pre-fix review is retained under provenance/; older build archives
+remain outside this clean release.
