@@ -5,8 +5,7 @@ Lean proofs of Theorem 1.1, Theorem 1.2, and Corollary 1.3 in the
 and Xiaoyu Wang. The model is the uniform law on labelled simple fixed-degree
 regular graphs, through exactly the sizes `N > d` with `Even (N*d)`.
 
-The public conclusions have no BS, HY, entropy, Gaussianity, or moment estimate
-as an additional hypothesis. This repository does not claim every sharper
+This repository does not claim every sharper
 intermediate estimate in the revised article: see the explicit
 [coverage boundary](docs/v2-coverage-status.txt).
 
@@ -22,8 +21,7 @@ The bulk theorem uses the actual microscopic eigenvalue counting measure,
 retaining multiplicities and the constant mode, with the article's
 `N*pi*rho_d(E)*(lambda-E)` normalization. The target `sineOneLaw` is identified
 by the Gaussian-beta ensemble bulk limit at beta one, on locally finite counting
-measures with the vague topology. A separate Pfaffian characterization is not
-part of this formal interface.
+measures with the vague topology. 
 
 The mixed fourth-moment statement is uniform over orthonormal eigenvector
 families with one through four channels in a compact bulk set, including repeated
